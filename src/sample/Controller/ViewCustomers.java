@@ -32,28 +32,20 @@ public class ViewCustomers implements Initializable {
 
     @FXML
     private Button addCustButton;
-
     @FXML
     private Button modifyCustButton;
-
     @FXML
     private Button deleteCustButton;
-
     @FXML
     private TableView <Customer>customerListView;
-
     @FXML
     private TableColumn <Customer,Integer> custIDCol;
-
     @FXML
     private TableColumn <Customer, String> custNameCol;
-
     @FXML
     private TableColumn <Customer, String> custAddrCol;
-
     @FXML
     private TableColumn <Customer, String> custPhoneCol;
-
     @FXML
     private TableColumn <Customer,Integer> custDivIDCol;
 
@@ -111,6 +103,7 @@ public class ViewCustomers implements Initializable {
     }
 
         public void getAllCustomers() throws SQLException {
+
         try {
             Statement statement = DBQuery.getStatement();
 
@@ -127,8 +120,8 @@ public class ViewCustomers implements Initializable {
                 int divID = Integer.parseInt(result.getString("Division_ID"));
                 String region = result.getString("Division");
                 String fulladdress = address + ", " + region;
-                Customer dummy = new Customer(customerID, name, fulladdress, phone, divID, postalCode);
-                allCustomers.add(dummy);
+                Customer c = new Customer(customerID, name, fulladdress, phone, divID, postalCode);
+                allCustomers.add(c);
             }
 
 

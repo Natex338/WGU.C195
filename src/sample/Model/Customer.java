@@ -6,18 +6,23 @@ public class Customer  {
     private String customerName;
     private String customerAddress;
     private String customerPhone;
-    private String customerpostal;
     private int divID;
+    private String customerpostal;
     private String division;
     private int countryId;
 
     public Customer(int customerID, String customerName, String customerAddress, String customerPhone, int divID,String customerPostalCode,String division, int countryId){
+        this.customerID =customerID;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerPhone = customerPhone;
+        this.divID=divID;
+        this.customerpostal=customerPostalCode;
+        this.division=division;
+        this.countryId=countryId;
 
     }
-
-
-
-    public Customer(int customerID, String customerName, String customerAddress, String customerPhone, Integer divID,String customerPostalCode){
+    public Customer(int customerID, String customerName, String customerAddress, String customerPhone, int divID,String customerPostalCode){
         this.customerID =customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -44,6 +49,12 @@ public class Customer  {
     public String getCustomerpostal() {
         return customerpostal;
     }
+    public int getCountryId() {
+        return countryId;
+    }
+    public String getDivision() {
+        return division;
+    }
 
     public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
@@ -63,5 +74,10 @@ public class Customer  {
     public void setCustomerpostal(String customerpostal) {
         this.customerpostal = customerpostal;
     }
-
+    public void setDivision(String division) {
+        this.division = division;
+    }
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+    }
 }
