@@ -28,11 +28,14 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException {
 
         Connection conn = DBConnection.startConnection();
-      /*  ResourceBundle rb = ResourceBundle.getBundle("/Nat", Locale.getDefault());
+        DBQuery.setStatement(conn);
+
+           /*  ResourceBundle rb = ResourceBundle.getBundle("/Nat", Locale.getDefault());
        {
             System.out.println(rb.getString("login") + " " + rb.getString("cancel"));
         } */
-        DBQuery.setStatement(conn);
+
+
         launch(args);
         DBConnection.closeConnection();
     }
