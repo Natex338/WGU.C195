@@ -1,5 +1,7 @@
 package sample.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,17 +10,35 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import sample.Model.Countries;
+import sample.Utils.DBCountries;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CreateCustomer {
+public class CreateCustomer implements Initializable {
+
+    public ComboBox countryCombo;
+    public ChoiceBox regionCombo;
+    private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+           allCountries.addAll(DBCountries.getAllCountries());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        countryCombo.setItems(allCountries);
+    }
 
     public void onCancelApt(ActionEvent actionEvent) throws IOException {
         Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);

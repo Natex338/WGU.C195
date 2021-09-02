@@ -1,6 +1,9 @@
 package sample.Model;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Customer  {
     private int customerID;
     private String customerName;
@@ -10,27 +13,22 @@ public class Customer  {
     private String customerpostal;
     private String division;
     private int countryId;
+    private static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
-    public Customer(int customerID, String customerName, String customerAddress, String customerPhone, int divID,String customerPostalCode,String division, int countryId){
+    public Customer(int customerID, String customerName, String customerAddress,String customerPostalCode, String customerPhone, int divID, int countryId){
         this.customerID =customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPhone = customerPhone;
         this.divID=divID;
         this.customerpostal=customerPostalCode;
-        this.division=division;
         this.countryId=countryId;
 
     }
-    public Customer(int customerID, String customerName, String customerAddress, String customerPhone, int divID,String customerPostalCode){
-        this.customerID =customerID;
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.customerPhone = customerPhone;
-        this.divID=divID;
-        this.customerpostal=customerPostalCode;
-    }
 
+    public static ObservableList<Customer> getCustomers() {
+        return customers;
+    }
     public int getCustomerID() {
         return customerID;
     }
@@ -79,5 +77,8 @@ public class Customer  {
     }
     public void setCountryId(int countryId) {
         this.countryId = countryId;
+    }
+    public static void setCustomers(ObservableList<Customer> customers) {
+        Customer.customers = customers;
     }
 }

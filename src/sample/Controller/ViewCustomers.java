@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sample.Model.Countries;
 import sample.Model.Customer;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import sample.*;
 import sample.Model.User;
+import sample.Utils.DBCountries;
 import sample.Utils.DBQuery;
 
 
@@ -47,13 +49,20 @@ public class ViewCustomers implements Initializable {
     @FXML
     private TableColumn <Customer, String> custPhoneCol;
     @FXML
-    private TableColumn <Customer,Integer> custDivIDCol;
+    private TableColumn <Customer,String> custDivIDCol;
 
 
     private ObservableList<Customer>allCustomers = FXCollections.observableArrayList();
+    private ObservableList<Countries>allCountries= FXCollections.observableArrayList();
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
+        try {
+
+            getAllCustomers();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
         PropertyValueFactory<Customer, String> customerName = new PropertyValueFactory<>("CustomerName");
         custNameCol.setCellValueFactory(customerName);
@@ -63,14 +72,13 @@ public class ViewCustomers implements Initializable {
         custIDCol.setCellValueFactory(customerID);
         PropertyValueFactory<Customer, String> customerAddress = new PropertyValueFactory<>("customerAddress");
         custAddrCol.setCellValueFactory(customerAddress);
-        PropertyValueFactory<Customer, Integer> divID = new PropertyValueFactory<>("divID");
-        custDivIDCol.setCellValueFactory(divID);
-        customerListView.setItems(allCustomers);
+        PropertyValueFactory<Customer, String> division = new PropertyValueFactory<>("division");
+        custDivIDCol.setCellValueFactory(division);
+        customerListView.setItems(Customer.getCustomers());
         try {
-
-            getAllCustomers();
+            allCountries.addAll(Countries.getCountries());
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
 
@@ -102,8 +110,7 @@ public class ViewCustomers implements Initializable {
         window.show();
     }
 
-        public void getAllCustomers() throws SQLException {
-
+        private void getAllCustomers() throws SQLException {
         try {
             Statement statement = DBQuery.getStatement();
 
@@ -119,10 +126,13 @@ public class ViewCustomers implements Initializable {
                 String phone = result.getString("Phone");
                 int divID = Integer.parseInt(result.getString("Division_ID"));
                 String region = result.getString("Division");
+                int country= result.getInt("COUNTRY_ID");
                 String fulladdress = address + ", " + region;
-                Customer c = new Customer(customerID, name, fulladdress, phone, divID, postalCode);
+                Customer c = new Customer(customerID, name, fulladdress, postalCode, phone, divID, country);
                 allCustomers.add(c);
+
             }
+            Customer.setCustomers(allCustomers);
 
 
         } catch (Exception e) {
@@ -130,5 +140,8 @@ public class ViewCustomers implements Initializable {
         }
         System.out.println("Done with list");
     }
+
+
+
 
 }
