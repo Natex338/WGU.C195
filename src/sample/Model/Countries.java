@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 public class Countries {
     private int country_Id;
@@ -14,7 +15,9 @@ public class Countries {
     private String created_By;
     private Timestamp lastUpdated;
     private String lastUpdatedBy;
+    private HashMap regionMap;
     private static ObservableList<Countries> countries = FXCollections.observableArrayList();
+
 
     public Countries(int countryID, String country, Timestamp createdDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy){
         this.country_Id = countryID;
@@ -25,6 +28,9 @@ public class Countries {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    public HashMap getRegionMap() {
+        return regionMap;
+    }
     public static ObservableList<sample.Model.Countries> getCountries() throws SQLException {
         return countries;
     }
@@ -70,5 +76,8 @@ public class Countries {
     }
     public String toString(){
         return  country_Id +"- "+country;
+    }
+    public void setRegionMap(HashMap regionMap) {
+        this.regionMap = regionMap;
     }
 }

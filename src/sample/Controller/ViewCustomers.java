@@ -49,7 +49,7 @@ public class ViewCustomers implements Initializable {
     @FXML
     private TableColumn <Customer, String> custPhoneCol;
     @FXML
-    private TableColumn <Customer,String> custDivIDCol;
+    private TableColumn <Customer,String> custCountryCol;
 
 
     private ObservableList<Customer>allCustomers = FXCollections.observableArrayList();
@@ -72,11 +72,14 @@ public class ViewCustomers implements Initializable {
         custIDCol.setCellValueFactory(customerID);
         PropertyValueFactory<Customer, String> customerAddress = new PropertyValueFactory<>("customerAddress");
         custAddrCol.setCellValueFactory(customerAddress);
-        PropertyValueFactory<Customer, String> division = new PropertyValueFactory<>("division");
-        custDivIDCol.setCellValueFactory(division);
+        PropertyValueFactory<Customer, String> custCountry = new PropertyValueFactory<>("country");
+        custCountryCol.setCellValueFactory(custCountry);
+
         customerListView.setItems(Customer.getCustomers());
         try {
             allCountries.addAll(Countries.getCountries());
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -127,11 +130,11 @@ public class ViewCustomers implements Initializable {
                 String phone = result.getString("Phone");
                 int divID = Integer.parseInt(result.getString("Division_ID"));
                 String region = result.getString("Division");
-                int country= result.getInt("COUNTRY_ID");
+                int countryid= result.getInt("COUNTRY_ID");
+                String countryName = result.getString("Country");
                 String fulladdress = address + ", " + region;
-                Customer c = new Customer(customerID, name, fulladdress, postalCode, phone, divID, country);
+                Customer c = new Customer(customerID, name, fulladdress, postalCode, phone, divID, countryid, countryName);
                 allCustomers.add(c);
-
             }
             Customer.setCustomers(allCustomers);
 
@@ -139,7 +142,6 @@ public class ViewCustomers implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Done with list");
     }
 
 

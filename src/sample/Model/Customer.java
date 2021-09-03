@@ -13,9 +13,10 @@ public class Customer  {
     private String customerpostal;
     private String division;
     private int countryId;
+    private String country;
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
-    public Customer(int customerID, String customerName, String customerAddress,String customerPostalCode, String customerPhone, int divID, int countryId){
+    public Customer(int customerID, String customerName, String customerAddress,String customerPostalCode, String customerPhone, int divID, int countryId,String countryName){
         this.customerID =customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -23,7 +24,7 @@ public class Customer  {
         this.divID=divID;
         this.customerpostal=customerPostalCode;
         this.countryId=countryId;
-
+        this.country =countryName;
     }
 
     public static ObservableList<Customer> getCustomers() {
@@ -53,6 +54,9 @@ public class Customer  {
     public String getDivision() {
         return division;
     }
+    public String getCountry() {
+        return country;
+    }
 
     public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
@@ -78,6 +82,10 @@ public class Customer  {
     public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public static void setCustomers(ObservableList<Customer> customers) {
         Customer.customers = customers;
     }

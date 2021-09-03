@@ -38,6 +38,7 @@ public class CreateCustomer implements Initializable {
             e.printStackTrace();
         }
         countryCombo.setItems(allCountries);
+
     }
 
     public void onCancelApt(ActionEvent actionEvent) throws IOException {
@@ -61,5 +62,7 @@ public class CreateCustomer implements Initializable {
     }
 
 
+    public void onCountrySelect(ActionEvent actionEvent) {
 
+    }
 }

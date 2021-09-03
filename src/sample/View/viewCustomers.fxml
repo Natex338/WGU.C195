@@ -19,7 +19,7 @@
           <TableColumn fx:id="custNameCol" prefWidth="152.0" text="Customer Name" />
             <TableColumn fx:id="custAddrCol" prefWidth="206.0" text="Customer Address" />
             <TableColumn fx:id="custPhoneCol" prefWidth="139.0" text="Phone" />
-            <TableColumn fx:id="custDivIDCol" prefWidth="75.0" text="Division ID" />
+            <TableColumn fx:id="custCountryCol" prefWidth="75.0" text="Country" />
         </columns>
       </TableView>
       <Label layoutX="26.0" layoutY="7.0" text="Customer List">
