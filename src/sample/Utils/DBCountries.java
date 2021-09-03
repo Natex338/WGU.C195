@@ -5,23 +5,25 @@ import javafx.collections.ObservableList;
 import sample.Model.Countries;
 import sample.Model.Customer;
 
+import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DBCountries {
 
     private static ObservableList<Countries> DBallCountries = FXCollections.observableArrayList();
-    private static HashMap regionMap = new HashMap();
+
 
 
     public static ObservableList<Countries> getAllCountries() throws SQLException {
         try {
             Statement statement = DBQuery.getStatement();
 
-            String getAllCustQuery = "Country, countries.Create_Date,countries.Created_By, countries.Last_Update, countries.Last_Updated_By, first_level_divisions.Division, first_level_divisions.COUNTRY_ID as \"Division_CountryID\"  from first_level_divisions,countries where first_level_divisions.COUNTRY_ID =countries.Country_ID";
+            String getAllCustQuery = "SELECT * FROM WJ07MYB.countries;";
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
                 int countryID = result.getInt("Country_ID");
@@ -47,8 +49,8 @@ public class DBCountries {
         this.DBallCountries = allCountries;
     }
 
-    public static HashMap getAllRegionsByCountry  (int cID){
-
+    public static ObservableList<String> getAllRegionsByCountry  (int cID){
+     ObservableList<String>regionsList = FXCollections.observableArrayList();
         try {
             Statement statement = DBQuery.getStatement();
 
@@ -56,15 +58,15 @@ public class DBCountries {
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
                 if (result.getInt("Country_ID")==cID){
-                    regionMap.put(result.getString("Division"),cID);
+                    regionsList.add(result.getString("Division"));
                 }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(regionMap);
+        System.out.println(regionsList);
 
-        return regionMap;
+        return regionsList;
     }
 
 

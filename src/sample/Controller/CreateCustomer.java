@@ -23,11 +23,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static sample.Utils.DBCountries.getAllRegionsByCountry;
+
 public class CreateCustomer implements Initializable {
 
     public ComboBox countryCombo;
     public ChoiceBox regionCombo;
     private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
+
+
 
 
     @Override
@@ -63,6 +67,8 @@ public class CreateCustomer implements Initializable {
 
 
     public void onCountrySelect(ActionEvent actionEvent) {
+        Countries bp = (Countries) countryCombo.getSelectionModel().getSelectedItem();
+        regionCombo.setItems(getAllRegionsByCountry( bp.getCountry_Id()));
 
     }
 }
