@@ -108,6 +108,7 @@ public class ViewCustomers implements Initializable {
         window.setScene(scene);
         window.setTitle("HomePage");
         window.show();
+
     }
 
         private void getAllCustomers() throws SQLException {
