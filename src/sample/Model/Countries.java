@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Countries {
     private int country_Id;
@@ -17,6 +18,7 @@ public class Countries {
     private Timestamp lastUpdated;
     private String lastUpdatedBy;
     private static ObservableList<Countries> countries = FXCollections.observableArrayList();
+    private static Map<String, Integer>divisionList= new HashMap<>();
 
 
     public Countries(int countryID, String country, Timestamp createdDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
@@ -32,9 +34,14 @@ public class Countries {
         return countries;
     }
 
+    public static int getDivision(String divname) {
+       return divisionList.get(divname);
+    }
+
     public int getCountry_Id() {
         return country_Id;
     }
+
 
     public String getCountry() {
         return country;
@@ -82,6 +89,11 @@ public class Countries {
 
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public static void setRegionHashMap(String name,int country_Id){
+        divisionList.put(name,country_Id);
+
     }
 
     public String toString() {

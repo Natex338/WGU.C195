@@ -18,7 +18,6 @@ public class DBCountries {
     private static ObservableList<Countries> DBallCountries = FXCollections.observableArrayList();
 
 
-
     public static ObservableList<Countries> getAllCountries() throws SQLException {
         try {
             Statement statement = DBQuery.getStatement();
@@ -58,13 +57,17 @@ public class DBCountries {
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
                 if (result.getInt("Country_ID")==cID){
-                    regionsList.add(result.getString("Division"));
+
+                    String name= result.getString("Division");
+                    int divisionID= result.getInt("Division_ID");
+                    regionsList.add(name);
+                    Countries.setRegionHashMap(name, divisionID);
+
                 }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(regionsList);
 
         return regionsList;
     }

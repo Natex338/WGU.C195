@@ -46,7 +46,10 @@
          </padding>
       </Label>
       <Label layoutX="9.0" layoutY="65.0" text="Customer ID" />
-      <Label fx:id="custIDfield" layoutX="101.0" layoutY="65.0" prefHeight="17.0" prefWidth="96.0" text="CustIDnumField" />
+      <Label fx:id="custIDfield" layoutX="101.0" layoutY="65.0" prefHeight="17.0" prefWidth="96.0" text="Automatically Set">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Label>
       <ComboBox fx:id="countryCombo" layoutX="101.0" layoutY="161.0" onAction="#onCountrySelect" prefHeight="25.0" prefWidth="143.0" />
       <ChoiceBox fx:id="regionCombo" layoutX="101.0" layoutY="193.0" prefHeight="25.0" prefWidth="143.0" />
       <Label layoutX="9.0" layoutY="165.0" text="Country" />

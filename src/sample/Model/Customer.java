@@ -8,6 +8,7 @@ public class Customer  {
     private int customerID;
     private String customerName;
     private String customerAddress;
+    private String address;
     private String customerPhone;
     private int divID;
     private String customerpostal;
@@ -16,15 +17,27 @@ public class Customer  {
     private String country;
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
-    public Customer(int customerID, String customerName, String customerAddress,String customerPostalCode, String customerPhone, int divID, int countryId,String countryName){
+    public Customer(int customerID, String customerName, String customerAddress,String customerPostalCode, String division, String customerPhone, int divID, int countryId,String countryName){
         this.customerID =customerID;
         this.customerName = customerName;
-        this.customerAddress = customerAddress;
+        this.address = customerAddress;
         this.customerPhone = customerPhone;
         this.divID=divID;
         this.customerpostal=customerPostalCode;
         this.countryId=countryId;
         this.country =countryName;
+        this.division=division;
+        this.customerAddress = customerAddress +", "+ division;
+    }
+
+    public Customer( String customerName, String customerAddress,String customerPostalCode, String customerPhone, int divID, int countryId){
+        this.customerName = customerName;
+        this.address = customerAddress;
+        this.customerPhone = customerPhone;
+        this.divID=divID;
+        this.customerpostal=customerPostalCode;
+        this.countryId=countryId;
+
     }
 
     public static ObservableList<Customer> getCustomers() {
@@ -85,8 +98,14 @@ public class Customer  {
     public void setCountry(String country) {
         this.country = country;
     }
-
     public static void setCustomers(ObservableList<Customer> customers) {
         Customer.customers = customers;
+    }
+
+    public static boolean validCustomer(String name, String address, String phone, String postal){
+        if (name.isEmpty() | address.isEmpty() | phone.isEmpty()|postal.isEmpty()){
+            return false;
+        }
+        else return true;
     }
 }

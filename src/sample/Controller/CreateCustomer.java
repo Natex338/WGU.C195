@@ -8,13 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Model.Countries;
+import sample.Model.Customer;
 import sample.Utils.DBCountries;
+import sample.Utils.DBCustomer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,8 +26,12 @@ import static sample.Utils.DBCountries.getAllRegionsByCountry;
 
 public class CreateCustomer implements Initializable {
 
-    public ComboBox countryCombo;
-    public ChoiceBox regionCombo;
+    public ComboBox<Countries> countryCombo;
+    public ChoiceBox<String> regionCombo;
+    public TextField namefield;
+    public TextField addressfield;
+    public TextField phonefield;
+    public TextField postalfield;
     private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
 
 
@@ -62,6 +65,22 @@ public class CreateCustomer implements Initializable {
     }
 
     public void onSaveButton(ActionEvent actionEvent) {
+        String name = namefield.getText();
+        String address = addressfield.getText();
+        String phone = phonefield.getText();
+        String postal = postalfield.getText();
+        int country = countryCombo.getSelectionModel().getSelectedItem().getCountry_Id();
+        int divisionID = Countries.getDivision(regionCombo.getValue());
+
+
+        if(Customer.validCustomer(name,address,phone,postal) ){
+            System.out.println("We good" );
+            Customer newCustomer = new Customer(name,address,postal,phone,divisionID ,country);
+            DBCustomer.insertCustomer(newCustomer);
+
+        }
+        else System.out.println("shit is empty");
+
 
     }
 

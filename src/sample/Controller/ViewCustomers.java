@@ -70,8 +70,8 @@ public class ViewCustomers implements Initializable {
         custPhoneCol.setCellValueFactory(customerPhone);
         PropertyValueFactory<Customer, Integer> customerID = new PropertyValueFactory<>("CustomerID");
         custIDCol.setCellValueFactory(customerID);
-        PropertyValueFactory<Customer, String> customerAddress = new PropertyValueFactory<>("customerAddress");
-        custAddrCol.setCellValueFactory(customerAddress);
+        PropertyValueFactory<Customer, String> CustomerAddress = new PropertyValueFactory<>("customerAddress");
+        custAddrCol.setCellValueFactory(CustomerAddress);
         PropertyValueFactory<Customer, String> custCountry = new PropertyValueFactory<>("country");
         custCountryCol.setCellValueFactory(custCountry);
 
@@ -132,8 +132,7 @@ public class ViewCustomers implements Initializable {
                 String region = result.getString("Division");
                 int countryid= result.getInt("COUNTRY_ID");
                 String countryName = result.getString("Country");
-                String fulladdress = address + ", " + region;
-                Customer c = new Customer(customerID, name, fulladdress, postalCode, phone, divID, countryid, countryName);
+                Customer c = new Customer(customerID, name, address, postalCode, region, phone, divID, countryid, countryName);
                 allCustomers.add(c);
             }
             Customer.setCustomers(allCustomers);
