@@ -1,5 +1,7 @@
 package sample.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,20 +9,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Countries;
+import sample.Model.Customer;
+import sample.Utils.DBAppointments;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class HomePage {
+public class HomePage implements Initializable {
+
 
     @FXML
     private Button exitButton;
@@ -35,23 +39,48 @@ public class HomePage {
     @FXML
     private Button removeApt;
     @FXML
-    private TableColumn aptIDCol;
+    private TableColumn <Appointment, Integer>aptIDCol;
     @FXML
-    private TableColumn aptTitleCol;
+    private TableColumn <Appointment, String>aptTitleCol;
     @FXML
-    private TableColumn aptDescCol;
+    private TableColumn <Appointment, String>aptDescCol;
     @FXML
-    private TableColumn aptLocCol;
+    private TableColumn <Appointment, String>aptLocCol;
     @FXML
-    private TableColumn aptContactCol;
+    private TableColumn <Appointment, Integer> aptContactCol;
     @FXML
-    private TableColumn aptTypeCol;
+    private TableColumn <Appointment, String>aptTypeCol;
     @FXML
-    private TableColumn aptSDateCol;
+    private TableColumn <Appointment, String> aptSDateCol;
     @FXML
-    private TableColumn aptEDateCol;
+    private TableColumn <Appointment, String> aptEDateCol;
     @FXML
-    private TableColumn aptCustIdCol;
+    private TableColumn <Appointment, Integer> aptCustIdCol;
+    @FXML
+    private TableView userAptList;
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        aptIDCol.setCellValueFactory(new PropertyValueFactory<>("aptID"));
+        aptTitleCol.setCellValueFactory(new PropertyValueFactory<>("aptTitle"));
+        aptDescCol.setCellValueFactory(new PropertyValueFactory<>("aptDesc"));
+        aptLocCol.setCellValueFactory(new PropertyValueFactory<>("aptLocation"));
+        aptContactCol.setCellValueFactory(new PropertyValueFactory<>("ContactID"));
+        aptTypeCol.setCellValueFactory(new PropertyValueFactory<>("aptType"));
+        aptSDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        aptEDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        aptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        try {
+            userAptList.setItems(DBAppointments.getAllApt());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void onExitButton(ActionEvent actionEvent) {
             Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);
@@ -84,4 +113,6 @@ public class HomePage {
 
     public void onRemoveApt(ActionEvent actionEvent) {
     }
+
+
 }

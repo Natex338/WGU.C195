@@ -121,7 +121,7 @@ public class ViewCustomers implements Initializable {
 
     }
 
-        private void getAllCustomers() throws SQLException {
+    private void getAllCustomers() throws SQLException {
         try {
             Statement statement = DBQuery.getStatement();
 
