@@ -1,6 +1,7 @@
 package sample.Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Countries;
@@ -19,12 +21,37 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HomePage {
-    public Button exitButton;
-    public Button viewCustomersButton;
-    public Button viewAddAppointments;
-    public Button reports;
-    public Button editApt;
-    public Button removeApt;
+
+    @FXML
+    private Button exitButton;
+    @FXML
+    private Button viewCustomersButton;
+    @FXML
+    private Button viewAddAppointments;
+    @FXML
+    private Button reports;
+    @FXML
+    private Button editApt;
+    @FXML
+    private Button removeApt;
+    @FXML
+    private TableColumn aptIDCol;
+    @FXML
+    private TableColumn aptTitleCol;
+    @FXML
+    private TableColumn aptDescCol;
+    @FXML
+    private TableColumn aptLocCol;
+    @FXML
+    private TableColumn aptContactCol;
+    @FXML
+    private TableColumn aptTypeCol;
+    @FXML
+    private TableColumn aptSDateCol;
+    @FXML
+    private TableColumn aptEDateCol;
+    @FXML
+    private TableColumn aptCustIdCol;
 
     public void onExitButton(ActionEvent actionEvent) {
             Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);

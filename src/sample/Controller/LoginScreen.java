@@ -110,8 +110,8 @@ public class LoginScreen implements Initializable {
                 return true;
             }
         }
+
         Alert alert= new Alert(Alert.AlertType.ERROR);
-        alert= new Alert(Alert.AlertType.ERROR);
         alert.setTitle(rb.getString("badLogin"));
         alert.setHeaderText(rb.getString("badLogin"));
         alert.setContentText(rb.getString("tryagain"));

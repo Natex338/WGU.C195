@@ -5,19 +5,26 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.HomePage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.HomePage">
    <children>
-      <Button fx:id="exitButton" layoutX="599.0" layoutY="342.0" mnemonicParsing="false" onAction="#onExitButton" prefHeight="25.0" prefWidth="51.0" text="Exit" />
-      <Button fx:id="viewCustomersButton" layoutX="23.0" layoutY="329.0" mnemonicParsing="false" onAction="#onViewCustomers" prefHeight="25.0" prefWidth="164.0" text="View Customers" />
-      <Button fx:id="viewAddAppointments" layoutX="222.0" layoutY="329.0" mnemonicParsing="false" onAction="#onVewAddApt" prefHeight="25.0" prefWidth="164.0" text="View/Add Appointments" />
-      <Button fx:id="reports" layoutX="420.0" layoutY="329.0" mnemonicParsing="false" onAction="#onClickReports" prefHeight="25.0" prefWidth="164.0" text="Reports" />
-      <TableView layoutX="23.0" layoutY="87.0" prefHeight="216.0" prefWidth="561.0">
+      <Button fx:id="exitButton" layoutX="882.0" layoutY="491.0" mnemonicParsing="false" onAction="#onExitButton" prefHeight="25.0" prefWidth="51.0" text="Exit" />
+      <Button fx:id="viewCustomersButton" layoutX="204.0" layoutY="477.0" mnemonicParsing="false" onAction="#onViewCustomers" prefHeight="25.0" prefWidth="164.0" text="View Customers" />
+      <Button fx:id="viewAddAppointments" layoutX="406.0" layoutY="477.0" mnemonicParsing="false" onAction="#onVewAddApt" prefHeight="25.0" prefWidth="164.0" text="View/Add Appointments" />
+      <Button fx:id="reports" layoutX="613.0" layoutY="477.0" mnemonicParsing="false" onAction="#onClickReports" prefHeight="25.0" prefWidth="164.0" text="Reports" />
+      <TableView layoutX="23.0" layoutY="66.0" prefHeight="402.0" prefWidth="930.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="aptIDCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="aptTitleCol" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="aptDescCol" prefWidth="216.0" text="Description" />
+            <TableColumn fx:id="aptLocCol" minWidth="0.0" prefWidth="87.0" text="Location" />
+            <TableColumn fx:id="aptContactCol" prefWidth="72.0" text="Contact" />
+            <TableColumn fx:id="aptTypeCol" prefWidth="71.0" text="Type" />
+            <TableColumn fx:id="aptSDateCol" prefWidth="129.0" text="Start Date/Time" />
+            <TableColumn fx:id="aptEDateCol" prefWidth="117.0" text="End Date/Time" />
+            <TableColumn fx:id="aptCustIdCol" prefWidth="87.0" text="Customer ID" />
         </columns>
       </TableView>
-      <Button fx:id="editApt" layoutX="591.0" layoutY="129.0" mnemonicParsing="false" onAction="#onEditApt" prefHeight="25.0" prefWidth="59.0" text="Edit" />
-      <Button fx:id="removeApt" layoutX="591.0" layoutY="89.0" mnemonicParsing="false" onAction="#onRemoveApt" text="Remove" />
+      <Button fx:id="editApt" layoutX="964.0" layoutY="156.0" mnemonicParsing="false" onAction="#onEditApt" prefHeight="25.0" prefWidth="59.0" text="Edit" />
+      <Button fx:id="removeApt" layoutX="964.0" layoutY="122.0" mnemonicParsing="false" onAction="#onRemoveApt" text="Remove" />
    </children>
 </AnchorPane>

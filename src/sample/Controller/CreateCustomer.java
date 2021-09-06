@@ -3,6 +3,7 @@ package sample.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -25,13 +26,19 @@ import java.util.ResourceBundle;
 import static sample.Utils.DBCountries.getAllRegionsByCountry;
 
 public class CreateCustomer implements Initializable {
-
-    public ComboBox<Countries> countryCombo;
-    public ChoiceBox<String> regionCombo;
-    public TextField namefield;
-    public TextField addressfield;
-    public TextField phonefield;
-    public TextField postalfield;
+    @FXML
+    private ComboBox<Countries> countryCombo;
+    @FXML
+    private ChoiceBox<String> regionCombo;
+    @FXML
+    private TextField namefield;
+    @FXML
+    private TextField addressfield;
+    @FXML
+    private TextField phonefield;
+    @FXML
+    private TextField postalfield;
+    @FXML
     private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
 
 
@@ -69,12 +76,19 @@ public class CreateCustomer implements Initializable {
         String address = addressfield.getText();
         String phone = phonefield.getText();
         String postal = postalfield.getText();
-        int country = countryCombo.getSelectionModel().getSelectedItem().getCountry_Id();
-        int divisionID = Countries.getDivision(regionCombo.getValue());
+        int country=-1;
+        int divisionID= -1;
 
         if(Customer.validCustomer(name,address,phone,postal) ){
+            if ((countryCombo.getSelectionModel().getSelectedIndex())!=-1){
+                country = countryCombo.getSelectionModel().getSelectedItem().getCountry_Id();
+            }
+            if (!regionCombo.getValue().isEmpty()) {
+                divisionID = Countries.getDivision(regionCombo.getValue());
+            }
             Customer newCustomer = new Customer(name,address,postal,phone,divisionID ,country);
             DBCustomer.insertCustomer(newCustomer);
+
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/viewCustomers.fxml")));
             Scene scene = new Scene(root);
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -82,7 +96,14 @@ public class CreateCustomer implements Initializable {
             window.setTitle("Customers");
             window.show();
         }
-        else System.out.println("shit is empty");
+        else {
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Missing Customer Info");
+            alert.setTitle("Required customer info is missing");
+            alert.setContentText("Please Enter all required customer info before saving");
+            alert.showAndWait();
+        }
+
     }
 
     public void onCountrySelect(ActionEvent actionEvent) {
