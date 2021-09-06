@@ -1,5 +1,6 @@
 package sample.Utils;
 
+import java.security.PublicKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,6 +28,8 @@ public class DBConnection {
         }
         return conn;
     }
+
+
 
 
     public static void closeConnection(){

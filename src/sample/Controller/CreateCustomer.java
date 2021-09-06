@@ -35,20 +35,20 @@ public class CreateCustomer implements Initializable {
     private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
 
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-           allCountries.addAll(DBCountries.getAllCountries());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        countryCombo.setItems(allCountries);
 
-    }
+        try {
+                allCountries.addAll(DBCountries.getAllCountries());
+                countryCombo.setItems(allCountries);
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+
 
     public void onCancelApt(ActionEvent actionEvent) throws IOException {
+
         Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);
         exitAlert.setTitle("Unsaved Customer");
         exitAlert.setHeaderText("Confirm Exit");
@@ -64,7 +64,7 @@ public class CreateCustomer implements Initializable {
         }
     }
 
-    public void onSaveButton(ActionEvent actionEvent) {
+    public void onSaveButton(ActionEvent actionEvent) throws IOException {
         String name = namefield.getText();
         String address = addressfield.getText();
         String phone = phonefield.getText();
@@ -72,18 +72,18 @@ public class CreateCustomer implements Initializable {
         int country = countryCombo.getSelectionModel().getSelectedItem().getCountry_Id();
         int divisionID = Countries.getDivision(regionCombo.getValue());
 
-
         if(Customer.validCustomer(name,address,phone,postal) ){
-            System.out.println("We good" );
             Customer newCustomer = new Customer(name,address,postal,phone,divisionID ,country);
             DBCustomer.insertCustomer(newCustomer);
-
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/viewCustomers.fxml")));
+            Scene scene = new Scene(root);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.setTitle("Customers");
+            window.show();
         }
         else System.out.println("shit is empty");
-
-
     }
-
 
     public void onCountrySelect(ActionEvent actionEvent) {
         Countries bp = (Countries) countryCombo.getSelectionModel().getSelectedItem();

@@ -51,7 +51,6 @@ public class ViewCustomers implements Initializable {
     @FXML
     private TableColumn <Customer,String> custCountryCol;
 
-
     private ObservableList<Customer>allCustomers = FXCollections.observableArrayList();
     private ObservableList<Countries>allCountries= FXCollections.observableArrayList();
 
@@ -64,27 +63,34 @@ public class ViewCustomers implements Initializable {
             System.out.println(e.getMessage());
         }
 
+
+        custIDCol.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerID"));
+        custNameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));
+        custAddrCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("addressRegion"));
+        custCountryCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("country"));
+        custPhoneCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerPhone"));
+
+        /*
         PropertyValueFactory<Customer, String> customerName = new PropertyValueFactory<>("CustomerName");
         custNameCol.setCellValueFactory(customerName);
         PropertyValueFactory<Customer, String> customerPhone = new PropertyValueFactory<>("CustomerPhone");
         custPhoneCol.setCellValueFactory(customerPhone);
         PropertyValueFactory<Customer, Integer> customerID = new PropertyValueFactory<>("CustomerID");
         custIDCol.setCellValueFactory(customerID);
-        PropertyValueFactory<Customer, String> CustomerAddress = new PropertyValueFactory<>("customerAddress");
-        custAddrCol.setCellValueFactory(CustomerAddress);
+        PropertyValueFactory<Customer, String> addressRegion = new PropertyValueFactory<>("addressRegion");
+        custAddrCol.setCellValueFactory(addressRegion);
         PropertyValueFactory<Customer, String> custCountry = new PropertyValueFactory<>("country");
         custCountryCol.setCellValueFactory(custCountry);
 
+         */
         customerListView.setItems(Customer.getCustomers());
-        try {
+       try {
             allCountries.addAll(Countries.getCountries());
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
 

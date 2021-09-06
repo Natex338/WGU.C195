@@ -26,7 +26,7 @@ public class LoginScreen {
     public PasswordField passwordBox;
     public TextField userNameBox;
     public Button loginButton;
-    public static User loggedInUser;
+    public static  User loggedInUser;
 
     @FXML
 
@@ -60,6 +60,7 @@ public class LoginScreen {
         while (result.next()){
             if (result.getString("password").equals(password)){
                 loggedInUser = new User((Integer.parseInt(result.getString("User_ID"))),userName,password);
+
                 return true;
 
             }

@@ -33,13 +33,10 @@ public class DBCountries {
                 String lastUpdateBy = result.getString("Last_Updated_By");
                 Countries c = new Countries(countryID,country,createdDate,createdBy,lastUpdate,lastUpdateBy);
                 DBallCountries.add(c);
-                System.out.println(country);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Done with Countries list");
-
         return DBallCountries;
     }
 
