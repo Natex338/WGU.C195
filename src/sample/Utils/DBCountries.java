@@ -15,13 +15,11 @@ import java.util.HashMap;
 
 public class DBCountries {
 
-    private static ObservableList<Countries> DBallCountries = FXCollections.observableArrayList();
-
 
     public static ObservableList<Countries> getAllCountries() throws SQLException {
+        ObservableList<Countries> DBallCountries = FXCollections.observableArrayList();
         try {
             Statement statement = DBQuery.getStatement();
-
             String getAllCustQuery = "SELECT * FROM WJ07MYB.countries;";
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
@@ -40,10 +38,12 @@ public class DBCountries {
         return DBallCountries;
     }
 
-    public void setAllCountries(ObservableList<Countries> allCountries) {
+   /* public void setAllCountries(ObservableList<Countries> allCountries) {
 
         this.DBallCountries = allCountries;
     }
+    
+    */
 
     public static ObservableList<String> getAllRegionsByCountry  (int cID){
      ObservableList<String>regionsList = FXCollections.observableArrayList();

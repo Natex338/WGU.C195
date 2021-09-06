@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 
 public class LoginScreen {
