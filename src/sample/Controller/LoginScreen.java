@@ -4,6 +4,7 @@ package sample.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,25 +12,71 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Model.User;
 import sample.Utils.DBQuery;
-import java.io.IOException;
+
+import java.io.*;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 
-public class LoginScreen {
-    public Label zoneIDField;
-    public Label languageField;
-    public PasswordField passwordBox;
-    public TextField userNameBox;
-    public Button loginButton;
-    public static  User loggedInUser;
+public class LoginScreen implements Initializable {
+    @FXML
+    private Button cancel;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private Label zoneIDField;
+    @FXML
+    private Label languageField;
+    @FXML
+    private PasswordField passwordBox;
+    @FXML
+    private TextField userNameBox;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private boolean loginSuccessfull;
+    public static User loggedInUser;
+
+    ResourceBundle rb;
 
     @FXML
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if (Locale.getDefault().getLanguage().equals("fr")||Locale.getDefault().getLanguage().equals("en"))
+        try {
+           rb = ResourceBundle.getBundle("sample/Nat", Locale.getDefault());
+           languageField.setText(Locale.getDefault().getLanguage());
+           zoneIDField.setText(ZoneId.systemDefault().getId());
+           passwordLabel.setText(rb.getString("Password"));
+           usernameLabel.setText(rb.getString("UserName"));
+           loginButton.setText(rb.getString("login"));
+           cancel.setText(rb.getString("cancel"));
+           userNameBox.setPromptText(rb.getString("UserName"));
+           passwordBox.setPromptText(rb.getString("Password"));
+
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void onLoginButton(ActionEvent actionEvent) throws SQLException, IOException {
-        if (loginCheck(userNameBox.getText(),passwordBox.getText())){
+
+        if (loginCheck(userNameBox.getText(), passwordBox.getText())) {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/homePage.fxml"));
             Scene scene = new Scene(root);
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -37,32 +84,60 @@ public class LoginScreen {
             window.setTitle("HomePage");
             window.show();
         }
-        else
-            System.out.println("you failed BITCH!");
+
     }
 
     public void onCancelButton(ActionEvent actionEvent) {
-        Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);
-        exitAlert.setTitle("Exiting Program");
-        exitAlert.setHeaderText("Confirm Exit");
-        exitAlert.setContentText("Are you sure you want to close the program?");
+        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        exitAlert.setTitle(rb.getString("title"));
+        exitAlert.setHeaderText(rb.getString("headerText"));
+        exitAlert.setContentText(rb.getString("content"));
         Optional<ButtonType> result = exitAlert.showAndWait();
-        if(result.get()==ButtonType.OK)
+        if (result.get() == ButtonType.OK)
             System.exit(0);
     }
 
-    public boolean loginCheck(String userName, String password) throws SQLException {
+    public boolean loginCheck(String userName, String password) throws SQLException, FileNotFoundException {
         Statement statement = DBQuery.getStatement();
-        String userQuery = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + userName + "'";;
-        ResultSet result=statement.executeQuery(userQuery);
-        while (result.next()){
-            if (result.getString("password").equals(password)){
-                loggedInUser = new User((Integer.parseInt(result.getString("User_ID"))),userName,password);
-
+        String userQuery = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + userName + "'";
+        ;
+        ResultSet result = statement.executeQuery(userQuery);
+        while (result.next()) {
+            if (result.getString("password").equals(password)) {
+                loggedInUser = new User((Integer.parseInt(result.getString("User_ID"))), userName, password);
+                loginSuccessfull=true;
+                loginActivity();
                 return true;
-
             }
         }
+        Alert alert= new Alert(Alert.AlertType.ERROR);
+        alert= new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(rb.getString("badLogin"));
+        alert.setHeaderText(rb.getString("badLogin"));
+        alert.setContentText(rb.getString("tryagain"));
+        Optional<ButtonType> result3 = alert.showAndWait();
+        loginSuccessfull=false;
+        loginActivity();
         return false;
+    }
+
+    public void loginActivity() throws FileNotFoundException {
+        String fileName="login_Activity.txt", items;
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = now.format(formatter);
+
+        PrintWriter pw = new PrintWriter(new FileOutputStream(new File(fileName),true ));
+
+        if (loginSuccessfull){
+            items = formatDateTime+ " User: " +loggedInUser.getUserName()+ " Logged in Successfully\n";
+        }
+        else {
+            items = formatDateTime + " Failed log in Attempt\n";
+        }
+        pw.append(items);
+        pw.close();
+
+
     }
 }

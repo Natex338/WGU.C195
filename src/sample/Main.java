@@ -29,13 +29,6 @@ public class Main extends Application {
 
         Connection conn = DBConnection.startConnection();
         DBQuery.setStatement(conn);
-
-           /*  ResourceBundle rb = ResourceBundle.getBundle("/Nat", Locale.getDefault());
-       {
-            System.out.println(rb.getString("login") + " " + rb.getString("cancel"));
-        } */
-
-
         launch(args);
         DBConnection.closeConnection();
     }
