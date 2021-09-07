@@ -57,7 +57,7 @@ public class HomePage implements Initializable {
     @FXML
     private TableColumn <Appointment, Integer> aptCustIdCol;
     @FXML
-    private TableView userAptList;
+    private TableView<Appointment> userAptList;
 
 
 
@@ -102,6 +102,12 @@ public class HomePage implements Initializable {
     }
 
     public void onVewAddApt(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/CreateApt.fxml"));
+        Scene scene = new Scene(root);
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.setTitle("Customers");
+        window.show();
 
     }
 
