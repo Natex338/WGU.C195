@@ -58,6 +58,7 @@ public class HomePage implements Initializable {
     private TableColumn <Appointment, Integer> aptCustIdCol;
     @FXML
     private TableView<Appointment> userAptList;
+    public static Appointment modApt;
 
 
 
@@ -114,7 +115,17 @@ public class HomePage implements Initializable {
     public void onClickReports(ActionEvent actionEvent) {
     }
 
-    public void onEditApt(ActionEvent actionEvent) {
+    public void onEditApt(ActionEvent actionEvent) throws IOException {
+        modApt = userAptList.getSelectionModel().getSelectedItem();
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/ModifyApt.fxml"));
+        Scene scene = new Scene(root);
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.setTitle("Customers");
+        window.show();
+
+
     }
 
     public void onRemoveApt(ActionEvent actionEvent) {

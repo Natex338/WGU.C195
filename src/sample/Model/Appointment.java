@@ -1,18 +1,21 @@
 package sample.Model;
 
+import java.time.LocalDateTime;
+import static sample.Utils.DBAppointments.dateTimeFormat;
+
 public class Appointment {
     private int aptID;
     private String aptTitle;
     private String aptDesc;
     private String aptLocation;
     private String aptType;
-    private String startDate;
-    private String endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private int contactID;
     private int customerID;
     private int userID;
 
-   public Appointment(int id, String title, String desc, String location, String type, String sDate, String eDate, int contactID, int customerID, int userID){
+    public Appointment(int id, String title, String desc, String location, String type, LocalDateTime sDate, LocalDateTime eDate, int contactID, int customerID, int userID){
        this.aptID =id;
        this.aptTitle =title;
        this.aptDesc =desc;
@@ -24,6 +27,17 @@ public class Appointment {
        this.customerID=customerID;
        this.userID=userID;
    }
+    public Appointment(String title, String desc, String location, String type, LocalDateTime sDate, LocalDateTime eDate, int contactID, int customerID, int userID){
+        this.aptTitle =title;
+        this.aptDesc =desc;
+        this.aptLocation =location;
+        this.aptType =type;
+        this.startDate=sDate;
+        this.endDate=eDate;
+        this.contactID=contactID;
+        this.customerID=customerID;
+        this.userID=userID;
+    }
 
     public int getCustomerID() {
         return customerID;
@@ -50,11 +64,18 @@ public class Appointment {
         return aptType;
     }
     public String getEndDate() {
-       return endDate;
+       return dateTimeFormat(endDate);
     }
     public String getStartDate() {
-        return startDate;
+       return dateTimeFormat(startDate);
     }
+    public LocalDateTime getStartDateTime(){
+       return startDate;
+    }
+    public LocalDateTime getEndDateTime(){
+        return endDate;
+    }
+
 
     public void setAptDesc(String aptDesc) {
         this.aptDesc = aptDesc;
@@ -71,10 +92,10 @@ public class Appointment {
     public void setAptType(String aptType) {
         this.aptType = aptType;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
     public void setCustomerID(int customerID) {

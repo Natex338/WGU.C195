@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="329.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CreateApt">
+<AnchorPane prefHeight="329.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ModifyApt">
    <children>
-      <Label layoutX="21.0" layoutY="14.0" text="Schedule New Appoint">
+      <Label layoutX="21.0" layoutY="14.0" text="Modify Appointment">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

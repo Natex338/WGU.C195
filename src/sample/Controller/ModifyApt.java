@@ -12,21 +12,21 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Contact;
+import sample.Model.Countries;
 import sample.Utils.DBAppointments;
 import sample.Utils.DBContact;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CreateApt implements Initializable {
+public class ModifyApt implements Initializable {
     @FXML
     private TextField userIdField;
     @FXML
@@ -51,10 +51,33 @@ public class CreateApt implements Initializable {
     private Spinner startTimeField;
     @FXML
     private Spinner endTimeField;
+    private Appointment holdApt;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         contactField.setItems(DBContact.DBallcontacts());
+        holdApt = HomePage.modApt;
+
+        aptIDText.setText(String.valueOf(holdApt.getAptID()));
+        titleField.setText(holdApt.getAptTitle());
+        descriptionField.setText(holdApt.getAptDesc());
+        locationField.setText(holdApt.getAptLocation());
+        typeField.setText(holdApt.getAptType());
+        startDateField.setValue(holdApt.getStartDateTime().toLocalDate());
+        startTimeField.setPromptText(holdApt.getStartDateTime().toLocalTime().toString());
+        endDateField.setValue(holdApt.getEndDateTime().toLocalDate());
+        endTimeField.setPromptText(holdApt.getEndDateTime().toLocalTime().toString());
+        userIdField.setText(String.valueOf(holdApt.getUserID()));
+        customerIdField.setText(String.valueOf(holdApt.getCustomerID()));
+
+
+        for (Contact c : contactField.getItems()) {
+            if (holdApt.getContactID() == c.getContactID()) {
+                contactField.setValue(c);
+                break;
+            }
+        }
+
     }
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
@@ -63,18 +86,18 @@ public class CreateApt implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         date.format(formatter);
 
-        String aptTitle= titleField.getText();
-        String aptDesc= descriptionField.getText();
-        String aptLocation=locationField.getText();
-        String aptType = typeField.getText();
-        LocalDateTime startDate = date;
-        LocalDateTime endDate = date;
-        int contactID=contactField.getSelectionModel().getSelectedItem().getContactID();
-        int customerID= Integer.parseInt(customerIdField.getText());
-        int userID= Integer.parseInt(userIdField.getText());
+        holdApt.setAptTitle(titleField.getText());
+        holdApt.setAptDesc(descriptionField.getText());
+        holdApt.setAptLocation(locationField.getText());
+        holdApt.setAptType(typeField.getText());
+        holdApt.setStartDate(date);
+        holdApt.setEndDate(date);
+        holdApt.setContactID(contactField.getSelectionModel().getSelectedItem().getContactID());
+        holdApt.setCustomerID(Integer.parseInt(customerIdField.getText()));
+        holdApt.setUserID(Integer.parseInt(userIdField.getText()));
 
-        Appointment a = new Appointment (aptTitle, aptDesc, aptLocation, aptType, startDate,endDate, contactID, customerID,userID);
-        DBAppointments.insertAppointment(a);
+
+        DBAppointments.updateAppointment(holdApt);
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/homePage.fxml")));
         Scene scene = new Scene(root);
