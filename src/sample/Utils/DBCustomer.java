@@ -1,5 +1,8 @@
 package sample.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.Controller.LoginScreen;
+import sample.Model.Appointment;
 import sample.Model.Customer;
 import java.sql.*;
 
@@ -57,6 +60,36 @@ public class DBCustomer {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static ObservableList<Customer> getAllCustomers() throws SQLException {
+        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+        try {
+            Statement statement = DBQuery.getStatement();
+
+            String getAllCustQuery = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, phone, customers.Division_ID, Division, first_level_divisions.COUNTRY_ID, Country \n" +
+                    "FROM customers,first_level_divisions,countries \n" +
+                    "WHERE customers.Division_ID = first_level_divisions.Division_ID AND first_level_divisions.COUNTRY_ID = countries.Country_ID;";
+            ResultSet result = statement.executeQuery(getAllCustQuery);
+            while (result.next()) {
+                String address = result.getString("Address");
+                String name = result.getString("Customer_Name");
+                int customerID = Integer.parseInt(result.getString("Customer_ID"));
+                String postalCode = result.getString("Postal_Code");
+                String phone = result.getString("Phone");
+                int divID = Integer.parseInt(result.getString("Division_ID"));
+                String region = result.getString("Division");
+                int countryid= result.getInt("COUNTRY_ID");
+                String countryName = result.getString("Country");
+                Customer c = new Customer(customerID, name, address, postalCode, region, phone, divID, countryid, countryName);
+                allCustomers.add(c);
+            }
+            Customer.setCustomers(allCustomers);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return allCustomers;
     }
 
 }

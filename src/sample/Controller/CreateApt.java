@@ -12,7 +12,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Contact;
+import sample.Model.Customer;
+import sample.Model.User;
 import sample.Utils.DBAppointments;
+import sample.Utils.DBConnection;
 import sample.Utils.DBContact;
 import java.io.IOException;
 import java.net.URL;
@@ -27,12 +30,14 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CreateApt implements Initializable {
+
+
     @FXML
-    private TextField userIdField;
+    private ComboBox <User> userIDcombo;
     @FXML
     private Label aptIDText;
     @FXML
-    private TextField customerIdField;
+    private ComboBox <Customer>customerIDCombo;
     @FXML
     private TextField titleField;
     @FXML
@@ -48,40 +53,66 @@ public class CreateApt implements Initializable {
     @FXML
     private DatePicker endDateField;
     @FXML
-    private Spinner startTimeField;
+    private ComboBox<LocalTime> startTimeField;
     @FXML
-    private Spinner endTimeField;
+    private ComboBox <LocalTime> endTimeField;
 
-    @Override
+    private LocalTime start = LocalTime.of(8,00);
+    private LocalTime end = LocalTime.of(23,00);
+
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         contactField.setItems(DBContact.DBallcontacts());
+        userIDcombo.setItems(DBConnection.getAllUsers());
+        try {
+            customerIDCombo.setItems(Customer.getCustomers());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        while (start.isBefore(end.plusSeconds(1))){
+            startTimeField.getItems().add(start);
+            endTimeField.getItems().add(start);
+            start = start.plusMinutes(5);
+        }
+
     }
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
-
-        LocalDateTime date = startDateField.getValue().atTime(LocalTime.now());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        date.format(formatter);
 
         String aptTitle= titleField.getText();
         String aptDesc= descriptionField.getText();
         String aptLocation=locationField.getText();
         String aptType = typeField.getText();
-        LocalDateTime startDate = date;
-        LocalDateTime endDate = date;
+        LocalDateTime startDate = startDateField.getValue().atTime(startTimeField.getValue());
+        LocalDateTime endDate = endDateField.getValue().atTime(endTimeField.getValue());
         int contactID=contactField.getSelectionModel().getSelectedItem().getContactID();
-        int customerID= Integer.parseInt(customerIdField.getText());
-        int userID= Integer.parseInt(userIdField.getText());
+        int customerID= contactField.getSelectionModel().getSelectedItem().getContactID();
+        int userID= userIDcombo.getSelectionModel().getSelectedItem().getUserID();
+        String contactName= contactField.getSelectionModel().getSelectedItem().getContactName();
 
-        Appointment a = new Appointment (aptTitle, aptDesc, aptLocation, aptType, startDate,endDate, contactID, customerID,userID);
-        DBAppointments.insertAppointment(a);
+        String error=(Appointment.isValidApt(aptTitle,aptDesc,aptLocation,aptType,startDate,endDate));
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/homePage.fxml")));
-        Scene scene = new Scene(root);
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.setTitle("HomePage");
-        window.show();
+        if (error.isEmpty()){
+            Appointment a = new Appointment (aptTitle, aptDesc, aptLocation, aptType, startDate,endDate, contactID, customerID,userID,contactName);
+            DBAppointments.insertAppointment(a);
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/homePage.fxml")));
+            Scene scene = new Scene(root);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.setTitle("HomePage");
+            window.show();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Not a valid Appointment");
+            alert.setHeaderText("Missing Appointment Info");
+            alert.setContentText(error);
+            alert.showAndWait();
+        }
+
+
 
     }
 
@@ -100,4 +131,6 @@ public class CreateApt implements Initializable {
             window.show();
         }
     }
+
+
 }

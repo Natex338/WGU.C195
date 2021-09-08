@@ -10,10 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sample.Model.Appointment;
-import sample.Model.Contact;
-import sample.Model.Countries;
+import sample.Model.*;
 import sample.Utils.DBAppointments;
+import sample.Utils.DBConnection;
 import sample.Utils.DBContact;
 
 import java.io.IOException;
@@ -27,12 +26,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModifyApt implements Initializable {
-    @FXML
-    private TextField userIdField;
+
+
     @FXML
     private Label aptIDText;
-    @FXML
-    private TextField customerIdField;
     @FXML
     private TextField titleField;
     @FXML
@@ -48,14 +45,35 @@ public class ModifyApt implements Initializable {
     @FXML
     private DatePicker endDateField;
     @FXML
-    private Spinner startTimeField;
+    private ComboBox<LocalTime> startTimeField;
     @FXML
-    private Spinner endTimeField;
+    private ComboBox <LocalTime> endTimeField;
     private Appointment holdApt;
+    @FXML
+    private ComboBox <User> useridCombo;
+    @FXML
+    private ComboBox <Customer> customerIDcombo;
+
+    private LocalTime start = LocalTime.of(8,00);
+    private LocalTime end = LocalTime.of(23,00);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        while (start.isBefore(end.plusSeconds(1))){
+            startTimeField.getItems().add(start);
+            endTimeField.getItems().add(start);
+            start = start.plusMinutes(5);
+        }
+
         contactField.setItems(DBContact.DBallcontacts());
+        try {
+            customerIDcombo.setItems(Customer.getCustomers());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        useridCombo.setItems(DBConnection.getAllUsers());
         holdApt = HomePage.modApt;
 
         aptIDText.setText(String.valueOf(holdApt.getAptID()));
@@ -67,9 +85,6 @@ public class ModifyApt implements Initializable {
         startTimeField.setPromptText(holdApt.getStartDateTime().toLocalTime().toString());
         endDateField.setValue(holdApt.getEndDateTime().toLocalDate());
         endTimeField.setPromptText(holdApt.getEndDateTime().toLocalTime().toString());
-        userIdField.setText(String.valueOf(holdApt.getUserID()));
-        customerIdField.setText(String.valueOf(holdApt.getCustomerID()));
-
 
         for (Contact c : contactField.getItems()) {
             if (holdApt.getContactID() == c.getContactID()) {
@@ -77,24 +92,40 @@ public class ModifyApt implements Initializable {
                 break;
             }
         }
+        try {
+            for (Customer c : Customer.getCustomers()){
+                if (holdApt.getCustomerID()==c.getCustomerID()){
+                    customerIDcombo.setValue(c);
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (User u :DBConnection.getAllUsers()){
+            if (holdApt.getUserID()==u.getUserID()){
+                useridCombo.setValue(u);
+                break;
+            }
+        }
+
+
 
     }
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
 
-        LocalDateTime date = startDateField.getValue().atTime(LocalTime.now());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        date.format(formatter);
+
 
         holdApt.setAptTitle(titleField.getText());
         holdApt.setAptDesc(descriptionField.getText());
         holdApt.setAptLocation(locationField.getText());
         holdApt.setAptType(typeField.getText());
-        holdApt.setStartDate(date);
-        holdApt.setEndDate(date);
+        holdApt.setStartDate(startDateField.getValue().atTime(startTimeField.getValue()));
+        holdApt.setEndDate(endDateField.getValue().atTime(endTimeField.getValue()));
         holdApt.setContactID(contactField.getSelectionModel().getSelectedItem().getContactID());
-        holdApt.setCustomerID(Integer.parseInt(customerIdField.getText()));
-        holdApt.setUserID(Integer.parseInt(userIdField.getText()));
+        holdApt.setCustomerID(customerIDcombo.getSelectionModel().getSelectedItem().getCustomerID());
+        holdApt.setUserID(useridCombo.getSelectionModel().getSelectedItem().getUserID());
 
 
         DBAppointments.updateAppointment(holdApt);

@@ -10,7 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Model.Appointment;
 import sample.Model.User;
+import sample.Utils.DBAppointments;
 import sample.Utils.DBQuery;
 
 import java.io.*;
@@ -18,10 +20,11 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -54,7 +57,6 @@ public class LoginScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         if (Locale.getDefault().getLanguage().equals("fr")||Locale.getDefault().getLanguage().equals("en"))
         try {
            rb = ResourceBundle.getBundle("sample/Nat", Locale.getDefault());
@@ -77,6 +79,12 @@ public class LoginScreen implements Initializable {
     public void onLoginButton(ActionEvent actionEvent) throws SQLException, IOException {
 
         if (loginCheck(userNameBox.getText(), passwordBox.getText())) {
+            try {
+                aptCheck();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/homePage.fxml"));
             Scene scene = new Scene(root);
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -124,20 +132,37 @@ public class LoginScreen implements Initializable {
     public void loginActivity() throws FileNotFoundException {
         String fileName="login_Activity.txt", items;
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formatDateTime = now.format(formatter);
+        DBAppointments.dateTimeFormat(now);
 
         PrintWriter pw = new PrintWriter(new FileOutputStream(new File(fileName),true ));
 
         if (loginSuccessfull){
-            items = formatDateTime+ " User: " +loggedInUser.getUserName()+ " Logged in Successfully\n";
+            items = DBAppointments.dateTimeFormat(now) + " User: " +loggedInUser.getUserName()+ " Logged in Successfully\n";
         }
         else {
-            items = formatDateTime + " Failed log in Attempt\n";
+            items = DBAppointments.dateTimeFormat(now)  + " Failed log in Attempt\n";
         }
         pw.append(items);
         pw.close();
+    }
 
+    public void aptCheck() throws SQLException {
+        LocalDateTime now = LocalDateTime.now();
 
+        for (Appointment c :DBAppointments.getAllApt()){
+            if (c.getUserID()==loggedInUser.getUserID()) {
+                if (c.getStartDateTime().toLocalDate().equals(now.toLocalDate())) {
+                    if (c.getStartDateTime().isAfter(LocalDateTime.now()) && c.getStartDateTime().isBefore(LocalDateTime.now().plusMinutes(15)))   {
+                        Alert apt = new Alert(Alert.AlertType.INFORMATION);
+                        apt.setTitle("You have a appointment coming up today");
+                        apt.setContentText("Appointment at: " + c.getStartDateTime() + " \n" + " Appointment ID:" + c.getAptID() + " \n Appointment Description:" + c.getAptDesc());
+                        apt.showAndWait();
+                    }
+                }
+            }
+        }
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        System.out.println(currentTime);
     }
 }

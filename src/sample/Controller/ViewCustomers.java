@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 import sample.*;
 import sample.Model.User;
 import sample.Utils.DBCountries;
+import sample.Utils.DBCustomer;
 import sample.Utils.DBQuery;
 
 
@@ -52,26 +53,24 @@ public class ViewCustomers implements Initializable {
     @FXML
     private TableColumn <Customer,String> custCountryCol;
 
-    private ObservableList<Customer>allCustomers = FXCollections.observableArrayList();
+
     private ObservableList<Countries>allCountries= FXCollections.observableArrayList();
     public static Customer modCustomer;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
-        try {
-
-            getAllCustomers();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
 
         custIDCol.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerID"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));
         custAddrCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("addressRegion"));
         custCountryCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("country"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerPhone"));
-        customerListView.setItems(Customer.getCustomers());
-       try {
+        try {
+            customerListView.setItems(Customer.getCustomers());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
             allCountries.addAll(Countries.getCountries());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,33 +120,5 @@ public class ViewCustomers implements Initializable {
 
     }
 
-    private void getAllCustomers() throws SQLException {
-        try {
-            Statement statement = DBQuery.getStatement();
-
-            String getAllCustQuery = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, phone, customers.Division_ID, Division, first_level_divisions.COUNTRY_ID, Country \n" +
-                    "FROM customers,first_level_divisions,countries \n" +
-                    "WHERE customers.Division_ID = first_level_divisions.Division_ID AND first_level_divisions.COUNTRY_ID = countries.Country_ID;";
-            ResultSet result = statement.executeQuery(getAllCustQuery);
-            while (result.next()) {
-                String address = result.getString("Address");
-                String name = result.getString("Customer_Name");
-                int customerID = Integer.parseInt(result.getString("Customer_ID"));
-                String postalCode = result.getString("Postal_Code");
-                String phone = result.getString("Phone");
-                int divID = Integer.parseInt(result.getString("Division_ID"));
-                String region = result.getString("Division");
-                int countryid= result.getInt("COUNTRY_ID");
-                String countryName = result.getString("Country");
-                Customer c = new Customer(customerID, name, address, postalCode, region, phone, divID, countryid, countryName);
-                allCustomers.add(c);
-            }
-            Customer.setCustomers(allCustomers);
-
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
 }

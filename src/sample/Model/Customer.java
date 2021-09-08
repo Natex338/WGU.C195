@@ -3,6 +3,12 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Utils.DBCustomer;
+import sample.Utils.DBQuery;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Customer  {
     private int customerID;
@@ -39,8 +45,8 @@ public class Customer  {
 
     }
 
-    public static ObservableList<Customer> getCustomers() {
-        return customers;
+    public static ObservableList<Customer> getCustomers() throws SQLException {
+        return DBCustomer.getAllCustomers();
     }
     public String getAddress() {
         return address;
@@ -112,10 +118,14 @@ public class Customer  {
     public static void setCustomers(ObservableList<Customer> customers) {
         Customer.customers = customers;
     }
+
     public static boolean validCustomer(String name, String address, String phone, String postal){
         if (name.isEmpty() | address.isEmpty() | phone.isEmpty()|postal.isEmpty()){
             return false;
         }
         else return true;
+    }
+    public String toString(){
+        return customerName;
     }
 }

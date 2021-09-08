@@ -13,6 +13,11 @@ public class User {
         this.password=password;
     }
 
+    public User (int userId, String username){
+        this.userID=userId;
+        this.userName=username;
+    }
+
     public String getPassword(){
         return this.password;
     }
@@ -23,5 +28,9 @@ public class User {
 
     public int getUserID(){
         return userID;
+    }
+
+    public String toString(){
+        return userName;
     }
 }

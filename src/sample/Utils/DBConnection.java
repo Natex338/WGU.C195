@@ -1,9 +1,12 @@
 package sample.Utils;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import sample.Model.Contact;
+import sample.Model.User;
+
 import java.security.PublicKey;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnection {
 
@@ -29,9 +32,6 @@ public class DBConnection {
         return conn;
     }
 
-
-
-
     public static void closeConnection(){
         try {
             conn.close();
@@ -40,5 +40,23 @@ public class DBConnection {
         catch (Exception e){
             //do nothing :)
         }
+    }
+    public static ObservableList<User> getAllUsers(){
+        ObservableList<User> DBUsers = FXCollections.observableArrayList();
+        try {
+            Statement statement = DBQuery.getStatement();
+            String getAllusersQuery = "SELECT * FROM users;";
+            ResultSet result = statement.executeQuery(getAllusersQuery);
+            while (result.next()) {
+                int userID  = result.getInt("User_ID");
+                String UserName= result.getString("User_Name");
+
+                User u = new User(userID,UserName);
+                DBUsers.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return DBUsers;
     }
 }

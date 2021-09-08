@@ -13,9 +13,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
+import sample.Model.Contact;
 import sample.Model.Countries;
 import sample.Model.Customer;
 import sample.Utils.DBAppointments;
+import sample.Utils.DBContact;
 
 import java.io.IOException;
 import java.net.URL;
@@ -69,7 +71,7 @@ public class HomePage implements Initializable {
         aptTitleCol.setCellValueFactory(new PropertyValueFactory<>("aptTitle"));
         aptDescCol.setCellValueFactory(new PropertyValueFactory<>("aptDesc"));
         aptLocCol.setCellValueFactory(new PropertyValueFactory<>("aptLocation"));
-        aptContactCol.setCellValueFactory(new PropertyValueFactory<>("ContactID"));
+        aptContactCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         aptTypeCol.setCellValueFactory(new PropertyValueFactory<>("aptType"));
         aptSDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         aptEDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
@@ -130,6 +132,7 @@ public class HomePage implements Initializable {
 
     public void onRemoveApt(ActionEvent actionEvent) {
     }
+
 
 
 }

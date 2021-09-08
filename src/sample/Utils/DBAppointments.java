@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Controller.LoginScreen;
 import sample.Model.Appointment;
-
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +15,7 @@ public class DBAppointments {
         ObservableList<Appointment> DBallAppointments = FXCollections.observableArrayList();
         try {
             Statement statement = DBQuery.getStatement();
-            String getAllCustQuery = "SELECT * FROM appointments;";
+            String getAllCustQuery = "SELECT * FROM appointments, contacts WHERE appointments.Contact_ID = contacts.Contact_ID;";
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
                 int aptId  = result.getInt("Appointment_ID");
@@ -29,10 +28,11 @@ public class DBAppointments {
                 int contactID=result.getInt("Contact_ID");
                 int customerID=result.getInt("Customer_ID");
                 int userID=result.getInt("User_ID");
+                String contactName= result.getString("Contact_Name");
 
 
 
-                Appointment a = new Appointment(aptId,aptTitle,aptDesc,aptLocation,aptType,startDate,endDate,contactID,customerID,userID);
+                Appointment a = new Appointment(aptId,aptTitle,aptDesc,aptLocation,aptType,startDate,endDate,contactID,customerID,userID,contactName);
                 DBallAppointments.add(a);
             }
         } catch (Exception e) {
@@ -46,8 +46,8 @@ public class DBAppointments {
         String aptDesc= c.getAptDesc();
         String aptLocation=c.getAptLocation();
         String aptType = c.getAptType();
-        Timestamp startDate = Timestamp.valueOf(c.getStartDate());
-        Timestamp endDate = Timestamp.valueOf(c.getEndDate());
+        Timestamp startDate = Timestamp.valueOf(c.getStartDateTime());
+        Timestamp endDate = Timestamp.valueOf(c.getEndDateTime());
         int contactID=c.getContactID();
         int customerID=c.getCustomerID();
         int userID=c.getUserID();
