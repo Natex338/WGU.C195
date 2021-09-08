@@ -15,6 +15,7 @@ import sample.Utils.DBAppointments;
 import sample.Utils.DBConnection;
 import sample.Utils.DBContact;
 
+import javax.lang.model.element.NestingKind;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -55,7 +56,7 @@ public class ModifyApt implements Initializable {
     private ComboBox <Customer> customerIDcombo;
 
     private LocalTime start = LocalTime.of(8,00);
-    private LocalTime end = LocalTime.of(23,00);
+    private LocalTime end = LocalTime.of(22,00);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,9 +83,9 @@ public class ModifyApt implements Initializable {
         locationField.setText(holdApt.getAptLocation());
         typeField.setText(holdApt.getAptType());
         startDateField.setValue(holdApt.getStartDateTime().toLocalDate());
-        startTimeField.setPromptText(holdApt.getStartDateTime().toLocalTime().toString());
+        startTimeField.setValue(holdApt.getStartDateTime().toLocalTime());
         endDateField.setValue(holdApt.getEndDateTime().toLocalDate());
-        endTimeField.setPromptText(holdApt.getEndDateTime().toLocalTime().toString());
+        endTimeField.setValue(holdApt.getEndDateTime().toLocalTime());
 
         for (Contact c : contactField.getItems()) {
             if (holdApt.getContactID() == c.getContactID()) {
@@ -110,22 +111,29 @@ public class ModifyApt implements Initializable {
         }
 
 
-
     }
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
 
+        String title= titleField.getText();
+        String description=descriptionField.getText();
+        String location= locationField.getText();
+        String type = typeField.getText();
+        LocalDateTime sTime= startDateField.getValue().atTime(startTimeField.getValue());
+        LocalDateTime eTime =endDateField.getValue().atTime(endTimeField.getValue());
+        int contactID = contactField.getSelectionModel().getSelectedItem().getContactID();
+        int customerID = customerIDcombo.getSelectionModel().getSelectedItem().getCustomerID();
+        int userID = useridCombo.getSelectionModel().getSelectedItem().getUserID();
 
-
-        holdApt.setAptTitle(titleField.getText());
-        holdApt.setAptDesc(descriptionField.getText());
-        holdApt.setAptLocation(locationField.getText());
-        holdApt.setAptType(typeField.getText());
-        holdApt.setStartDate(startDateField.getValue().atTime(startTimeField.getValue()));
-        holdApt.setEndDate(endDateField.getValue().atTime(endTimeField.getValue()));
-        holdApt.setContactID(contactField.getSelectionModel().getSelectedItem().getContactID());
-        holdApt.setCustomerID(customerIDcombo.getSelectionModel().getSelectedItem().getCustomerID());
-        holdApt.setUserID(useridCombo.getSelectionModel().getSelectedItem().getUserID());
+        holdApt.setAptTitle(title);
+        holdApt.setAptDesc(description);
+        holdApt.setAptLocation(location);
+        holdApt.setAptType(type);
+        holdApt.setStartDate(sTime);
+        holdApt.setEndDate(eTime);
+        holdApt.setContactID(contactID);
+        holdApt.setCustomerID(customerID);
+        holdApt.setUserID(userID);
 
 
         DBAppointments.updateAppointment(holdApt);
