@@ -7,7 +7,7 @@ import sample.Model.Contact;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DBContact {
+public abstract class DBContact {
     public static ObservableList<Contact> DBallcontacts() {
         ObservableList<Contact> DBallcontacts = FXCollections.observableArrayList();
         try {

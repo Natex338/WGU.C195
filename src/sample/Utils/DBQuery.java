@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DBQuery {
+public abstract class DBQuery {
 
     private static Statement statement;
     private static PreparedStatement preparedStatement;

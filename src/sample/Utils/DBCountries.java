@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DBCountries {
+public abstract class DBCountries {
 
 
     public static ObservableList<Countries> getAllCountries() throws SQLException {

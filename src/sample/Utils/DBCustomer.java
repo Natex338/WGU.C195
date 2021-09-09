@@ -6,7 +6,7 @@ import sample.Model.Appointment;
 import sample.Model.Customer;
 import java.sql.*;
 
-public class DBCustomer {
+public abstract class DBCustomer {
 
 
     public static void insertCustomer(Customer customer) {
@@ -90,6 +90,14 @@ public class DBCustomer {
             System.out.println(e.getMessage());
         }
         return allCustomers;
+    }
+
+    public static void deleteCustomer(Customer customer) throws SQLException {
+
+        String deleteStatement = "DELETE FROM customers WHERE Customer_ID = ?;";
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement(deleteStatement);
+        ps.setInt(1,customer.getCustomerID());
+        ps.execute();
     }
 
 }

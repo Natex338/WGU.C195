@@ -8,7 +8,7 @@ import sample.Model.User;
 import java.security.PublicKey;
 import java.sql.*;
 
-public class DBConnection {
+public abstract class DBConnection {
 
     private static final String protocol = "jdbc";
     private static final String vendorName = ":mysql:";

@@ -81,6 +81,7 @@ public class LoginScreen implements Initializable {
         if (loginCheck(userNameBox.getText(), passwordBox.getText())) {
             try {
                 aptCheck();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -107,8 +108,7 @@ public class LoginScreen implements Initializable {
 
     public boolean loginCheck(String userName, String password) throws SQLException, FileNotFoundException {
         Statement statement = DBQuery.getStatement();
-        String userQuery = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + userName + "'";
-        ;
+        String userQuery = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + userName + "'";        ;
         ResultSet result = statement.executeQuery(userQuery);
         while (result.next()) {
             if (result.getString("password").equals(password)) {
@@ -134,13 +134,14 @@ public class LoginScreen implements Initializable {
         LocalDateTime now = LocalDateTime.now();
         DBAppointments.dateTimeFormat(now);
 
+
         PrintWriter pw = new PrintWriter(new FileOutputStream(new File(fileName),true ));
 
         if (loginSuccessfull){
-            items = DBAppointments.dateTimeFormat(now) + " User: " +loggedInUser.getUserName()+ " Logged in Successfully\n";
+            items = "User: " +loggedInUser.getUserName()+ " Logged in Successfully @" + DBAppointments.dateTimeFormat(now)+"\n";
         }
         else {
-            items = DBAppointments.dateTimeFormat(now)  + " Failed log in Attempt\n";
+            items = "User: "+ userNameBox.getText() +" gave invalid Login @ " + DBAppointments.dateTimeFormat(now)+"\n";
         }
         pw.append(items);
         pw.close();
@@ -148,21 +149,23 @@ public class LoginScreen implements Initializable {
 
     public void aptCheck() throws SQLException {
         LocalDateTime now = LocalDateTime.now();
-
         for (Appointment c :DBAppointments.getAllApt()){
             if (c.getUserID()==loggedInUser.getUserID()) {
                 if (c.getStartDateTime().toLocalDate().equals(now.toLocalDate())) {
                     if (c.getStartDateTime().isAfter(LocalDateTime.now()) && c.getStartDateTime().isBefore(LocalDateTime.now().plusMinutes(15)))   {
                         Alert apt = new Alert(Alert.AlertType.INFORMATION);
-                        apt.setTitle("You have a appointment coming up today");
+                        apt.setTitle("You have a appointment coming up!");
                         apt.setContentText("Appointment at: " + c.getStartDateTime() + " \n" + " Appointment ID:" + c.getAptID() + " \n Appointment Description:" + c.getAptDesc());
                         apt.showAndWait();
                     }
+                    }
+                else {
+                    Alert apt = new Alert(Alert.AlertType.INFORMATION);
+                    apt.setTitle("You have no up coming appointments!");
+                    apt.setHeaderText("There are no up coming Appointments");
+                    apt.showAndWait();
                 }
             }
         }
-        LocalDateTime currentTime = LocalDateTime.now();
-
-        System.out.println(currentTime);
     }
 }

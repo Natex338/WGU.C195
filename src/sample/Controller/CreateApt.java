@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
@@ -79,40 +80,47 @@ public class CreateApt implements Initializable {
     }
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
-
-        String aptTitle= titleField.getText();
-        String aptDesc= descriptionField.getText();
-        String aptLocation=locationField.getText();
-        String aptType = typeField.getText();
-        LocalDateTime startDate = startDateField.getValue().atTime(startTimeField.getValue());
-        LocalDateTime endDate = endDateField.getValue().atTime(endTimeField.getValue());
-        int contactID=contactField.getSelectionModel().getSelectedItem().getContactID();
-        int customerID= contactField.getSelectionModel().getSelectedItem().getContactID();
-        int userID= userIDcombo.getSelectionModel().getSelectedItem().getUserID();
-        String contactName= contactField.getSelectionModel().getSelectedItem().getContactName();
-
-        String error=(Appointment.isValidApt(aptTitle,aptDesc,aptLocation,aptType,startDate,endDate));
-
-        if (error.isEmpty()){
-            Appointment a = new Appointment (aptTitle, aptDesc, aptLocation, aptType, startDate,endDate, contactID, customerID,userID,contactName);
-            DBAppointments.insertAppointment(a);
-
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/homePage.fxml")));
-            Scene scene = new Scene(root);
-            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.setTitle("HomePage");
-            window.show();
+        String error = "";
+        if (contactField.getValue()==null| customerIDCombo.getValue()==null|userIDcombo.getValue()==null|startTimeField.getValue()==null) {
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            alert2.setTitle("Please fill in in all appointment info");
+            alert2.setContentText("Missing appointment info");
+            alert2.showAndWait();
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Not a valid Appointment");
-            alert.setHeaderText("Missing Appointment Info");
-            alert.setContentText(error);
-            alert.showAndWait();
+            String aptTitle = titleField.getText();
+            String aptDesc = descriptionField.getText();
+            String aptLocation = locationField.getText();
+            String aptType = typeField.getText();
+            LocalDateTime startDate = startDateField.getValue().atTime(startTimeField.getValue());
+            LocalDateTime endDate = endDateField.getValue().atTime(endTimeField.getValue());
+            int contactID = contactField.getSelectionModel().getSelectedItem().getContactID();
+            int customerID = customerIDCombo.getSelectionModel().getSelectedItem().getCustomerID();
+            int userID = userIDcombo.getSelectionModel().getSelectedItem().getUserID();
+            String contactName = contactField.getSelectionModel().getSelectedItem().getContactName();
+            error=(Appointment.isValidApt(aptTitle,aptDesc,aptLocation,aptType,startDate,endDate));
+
+            if (error.isEmpty()){
+
+                Appointment a = new Appointment (aptTitle, aptDesc, aptLocation, aptType, startDate,endDate, contactID, customerID,userID,contactName);
+                DBAppointments.insertAppointment(a);
+
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/homePage.fxml")));
+                Scene scene = new Scene(root);
+                Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.setTitle("HomePage");
+                window.show();
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Not a valid Appointment");
+                alert.setHeaderText("Missing Appointment Info");
+                alert.setContentText(error);
+                alert.showAndWait();
+            }
+
         }
-
-
 
     }
 

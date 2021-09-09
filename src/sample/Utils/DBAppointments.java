@@ -4,12 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Controller.LoginScreen;
 import sample.Model.Appointment;
+import sample.Model.Customer;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class DBAppointments {
+public abstract class  DBAppointments {
 
     public static ObservableList<Appointment> getAllApt() throws SQLException {
         ObservableList<Appointment> DBallAppointments = FXCollections.observableArrayList();
@@ -73,6 +75,22 @@ public class DBAppointments {
         }
 
 
+
+    }
+    public static void deleteCustomerApt(int cID) throws SQLException {
+        String deleteStatement = "DELETE FROM appointments WHERE Customer_ID = ?;";
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement(deleteStatement);
+        ps.setInt(1,cID);
+        ps.execute();
+
+    }
+
+
+    public static void deleteAppointment(Appointment c) throws SQLException {
+        String deleteStatement = "DELETE FROM appointments WHERE Appointment_ID = ?;";
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement(deleteStatement);
+        ps.setInt(1,c.getAptID());
+        ps.execute();
 
     }
 
