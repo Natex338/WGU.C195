@@ -1,8 +1,9 @@
 <B>WGU C195 - Software II<br />
-Scheduling App<br /></b>
+Scheduling App<br/></b>
 
-Name: Nathan Edwards <br />
-Email: nedwa52@wgu.edu<br />
+Name: Nathan Edwards <br/>
+Email: nedwa52@wgu.edu<br/>
+Student ID: 001124907 <br/>
 
 Application Version: 1.1.3<br />
 Date: 09/09/2021<br />
