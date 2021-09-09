@@ -112,7 +112,13 @@ public class HomePage implements Initializable {
 
     }
 
-    public void onClickReports(ActionEvent actionEvent) {
+    public void onClickReports(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/Reports.fxml"));
+        Scene scene = new Scene(root);
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.setTitle("Reports");
+        window.show();
     }
 
     public void onEditApt(ActionEvent actionEvent) throws IOException {

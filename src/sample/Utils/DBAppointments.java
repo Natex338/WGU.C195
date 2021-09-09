@@ -43,6 +43,37 @@ public abstract class  DBAppointments {
         return DBallAppointments;
     }
 
+
+    public static ObservableList<Appointment> getAllAptbyContact(int cID) throws SQLException {
+        ObservableList<Appointment> DBallByContact = FXCollections.observableArrayList();
+        try {
+            Statement statement = DBQuery.getStatement();
+            String byContact = "SELECT * FROM appointments, contacts WHERE appointments.Contact_ID = contacts.Contact_ID, Contact_ID="+cID+";";
+            ResultSet result = statement.executeQuery(byContact);
+            while (result.next()) {
+                int aptId  = result.getInt("Appointment_ID");
+                String aptTitle= result.getString("Title");
+                String aptDesc= result.getString("Description");
+                String aptLocation=result.getString("Location");
+                String aptType = result.getString("Type");
+                LocalDateTime startDate = result.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime endDate = result.getTimestamp("End").toLocalDateTime();
+                int contactID=result.getInt("Contact_ID");
+                int customerID=result.getInt("Customer_ID");
+                int userID=result.getInt("User_ID");
+                String contactName= result.getString("Contact_Name");
+
+
+
+                Appointment a = new Appointment(aptId,aptTitle,aptDesc,aptLocation,aptType,startDate,endDate,contactID,customerID,userID,contactName);
+                DBallByContact.add(a);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return DBallByContact;
+    }
+
     public static void insertAppointment(Appointment c) throws SQLException {
         String aptTitle= c.getAptTitle();
         String aptDesc= c.getAptDesc();

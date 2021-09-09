@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Reports">
+    <children>
+        <Button fx:id="onHomePage" layoutX="931.0" layoutY="20.0" mnemonicParsing="false" onAction="#onHomePage" prefHeight="25.0" prefWidth="88.0" text="HomePage" />
+        <TableView fx:id="aptByContact" layoutX="24.0" layoutY="115.0" prefHeight="154.0" prefWidth="929.0">
+            <columns>
+                <TableColumn fx:id="aptIDCol" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="aptTitleCol" prefWidth="75.0" text="Title" />
+                <TableColumn fx:id="aptDescCol" prefWidth="216.0" text="Description" />
+                <TableColumn fx:id="aptLocCol" minWidth="0.0" prefWidth="87.0" text="Location" />
+                <TableColumn fx:id="aptContactCol" prefWidth="72.0" text="Contact" />
+                <TableColumn fx:id="aptTypeCol" prefWidth="71.0" text="Type" />
+                <TableColumn fx:id="aptSDateCol" prefWidth="129.0" text="Start Date/Time" />
+                <TableColumn fx:id="aptEDateCol" prefWidth="117.0" text="End Date/Time" />
+                <TableColumn fx:id="aptCustIdCol" prefWidth="87.0" text="Customer ID" />
+            </columns>
+        </TableView>
+        <Label layoutX="34.0" layoutY="13.0" text="Reports">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+      <ChoiceBox fx:id="contactCombo" layoutX="252.0" layoutY="81.0" prefWidth="150.0" onAction="#onCantactCombo" />
+      <Label layoutX="18.0" layoutY="78.0" prefHeight="27.0" prefWidth="234.0" text="Appointment list by Contact:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="530.0" text="Appointments by type and Month">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="aptByMonthView" layoutX="48.0" layoutY="571.0" prefHeight="200.0" prefWidth="222.0">
+        <columns>
+          <TableColumn fx:id="aptMonth" prefWidth="150.0" text="Month" />
+          <TableColumn fx:id="count" minWidth="0.0" prefWidth="71.0" text="Apt Count" />
+        </columns>
+      </TableView>
+      <TableView fx:id="AptByTypeView" layoutX="302.0" layoutY="571.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="aptByTypeField" prefWidth="151.0" text="Type" />
+          <TableColumn fx:id="byTypeCount" minWidth="0.0" prefWidth="48.0" text="Count" />
+        </columns>
+      </TableView>
+      <TableView layoutX="24.0" layoutY="319.0" prefHeight="200.0" prefWidth="843.0">
+        <columns>
+            <TableColumn fx:id="aptIDCol1" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="aptTitleCol1" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="aptDescCol1" prefWidth="216.0" text="Description" />
+            <TableColumn fx:id="aptContactCol1" prefWidth="72.0" text="Contact" />
+            <TableColumn fx:id="aptTypeCol1" prefWidth="71.0" text="Type" />
+            <TableColumn fx:id="aptSDateCol1" prefWidth="129.0" text="Start Date/Time" />
+            <TableColumn fx:id="aptEDateCol1" prefWidth="117.0" text="End Date/Time" />
+            <TableColumn fx:id="aptCustIdCol1" prefWidth="87.0" text="Customer ID" />
+        </columns>
+      </TableView>
+      <Label layoutX="24.0" layoutY="285.0" prefHeight="27.0" prefWidth="234.0" text="Appointment list by Location:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="LocationCombo" layoutX="272.0" layoutY="286.0" prefWidth="150.0" />
+    </children>
+</AnchorPane>
