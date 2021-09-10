@@ -7,10 +7,7 @@ import sample.Model.Appointment;
 import sample.Model.Reports;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 
@@ -227,26 +224,17 @@ public abstract class  DBAppointments {
         }
         return DBallByLocation;
     }
-
-    public static String toUTC(String dateTime) {
-        Timestamp timestamp = Timestamp.valueOf(dateTime);
-        LocalDateTime ldt = timestamp.toLocalDateTime();
-        ZonedDateTime zdt = ldt.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
-        ZonedDateTime utczdt = zdt.withZoneSameInstant(ZoneId.of("UTC"));
-        LocalDateTime ldtIn = utczdt.toLocalDateTime();
-        String finishUTC = ldtIn.format(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss"));
-        return finishUTC;
+    public static boolean estCheck(LocalDateTime time ){
+        LocalTime closed = LocalTime.of(22, 0);
+        LocalTime open = LocalTime.of(8, 0);
+        ZoneId EST = ZoneId.of("US/Eastern");
+        ZonedDateTime localToEST = time.atZone(ZoneId.systemDefault()).withZoneSameInstant(EST);
+        LocalTime time2 = localToEST.toLocalTime();
+        if (time2.isAfter(closed)| time2.isBefore(open))
+            return true;
+        return false;
     }
 
-    public static String toLocal(String dateTime) {
-        Timestamp timestamp = Timestamp.valueOf(dateTime);
-        LocalDateTime ldt = timestamp.toLocalDateTime();
-        ZonedDateTime zdtOut = ldt.atZone(ZoneId.of("UTC"));
-        ZonedDateTime zdtOutToLocalTZ = zdtOut.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
-        LocalDateTime ldOutFinal = zdtOutToLocalTZ.toLocalDateTime();
-        String finishLocal = ldOutFinal.format(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss"));
-        return finishLocal;
-    }
 }
 
 

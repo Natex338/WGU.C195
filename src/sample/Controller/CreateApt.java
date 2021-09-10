@@ -60,8 +60,8 @@ public class CreateApt implements Initializable {
     private ComboBox <LocalTime> endTimeField;
 
 
-    private LocalTime start = LocalTime.of(8,00);
-    private LocalTime end = LocalTime.of(23,00);
+    private LocalTime start = LocalTime.of(0,00);
+    private LocalTime end = LocalTime.of(23,54);
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,18 +83,18 @@ public class CreateApt implements Initializable {
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
         String error = "";
-        if (contactField.getValue()==null| customerIDCombo.getValue()==null|userIDcombo.getValue()==null|startTimeField.getValue()==null) {
+        if (contactField.getValue()==null| customerIDCombo.getValue()==null|userIDcombo.getValue()==null|startTimeField.getValue()==null|endTimeField.getValue()==null) {
             Alert alert2 = new Alert(Alert.AlertType.ERROR);
             alert2.setTitle("Please fill in in all appointment info");
             alert2.setContentText("Missing appointment info");
             alert2.showAndWait();
         }
+
         else {
             String aptTitle = titleField.getText();
             String aptDesc = descriptionField.getText();
             String aptLocation = locationField.getText();
             String aptType = typeField.getText();
-
             LocalDateTime startDate = startDateField.getValue().atTime(startTimeField.getValue());
             LocalDateTime endDate = endDateField.getValue().atTime(endTimeField.getValue());
             int contactID = contactField.getSelectionModel().getSelectedItem().getContactID();
@@ -142,6 +142,7 @@ public class CreateApt implements Initializable {
             window.show();
         }
     }
+
 
 
 }

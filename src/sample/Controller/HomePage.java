@@ -27,6 +27,8 @@ public class HomePage implements Initializable {
 
 
     @FXML
+    private TableColumn<Appointment, Integer> userIDField;
+    @FXML
     private Button exitButton;
     @FXML
     private Button viewCustomersButton;
@@ -74,6 +76,7 @@ public class HomePage implements Initializable {
         aptSDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         aptEDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         aptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        userIDField.setCellValueFactory(new PropertyValueFactory<>("userID"));
         try {
             userAptList.setItems(DBAppointments.getAllApt());
         } catch (SQLException e) {

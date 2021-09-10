@@ -15,17 +15,18 @@
       <Button fx:id="viewCustomersButton" layoutX="270.0" layoutY="55.0" mnemonicParsing="false" onAction="#onViewCustomers" prefHeight="25.0" prefWidth="104.0" text="View Customers" />
       <Button fx:id="viewAddAppointments" layoutX="964.0" layoutY="117.0" mnemonicParsing="false" onAction="#onVewAddApt" prefHeight="25.0" prefWidth="59.0" text="Add " />
       <Button fx:id="reports" layoutX="385.0" layoutY="55.0" mnemonicParsing="false" onAction="#onClickReports" prefHeight="25.0" prefWidth="104.0" text="View Reports" />
-      <TableView fx:id="userAptList" layoutX="24.0" layoutY="91.0" prefHeight="377.0" prefWidth="929.0">
+      <TableView fx:id="userAptList" layoutX="20.0" layoutY="106.0" prefHeight="362.0" prefWidth="937.0">
         <columns>
-          <TableColumn fx:id="aptIDCol" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="aptTitleCol" prefWidth="75.0" text="Title" />
-            <TableColumn fx:id="aptDescCol" prefWidth="216.0" text="Description" />
-            <TableColumn fx:id="aptLocCol" minWidth="0.0" prefWidth="87.0" text="Location" />
-            <TableColumn fx:id="aptContactCol" prefWidth="72.0" text="Contact" />
-            <TableColumn fx:id="aptTypeCol" prefWidth="71.0" text="Type" />
-            <TableColumn fx:id="aptSDateCol" prefWidth="129.0" text="Start Date/Time" />
-            <TableColumn fx:id="aptEDateCol" prefWidth="117.0" text="End Date/Time" />
-            <TableColumn fx:id="aptCustIdCol" prefWidth="87.0" text="Customer ID" />
+          <TableColumn fx:id="aptIDCol" prefWidth="25.0" text="ID" />
+            <TableColumn fx:id="userIDField" prefWidth="47.0" text="UserID" />
+            <TableColumn fx:id="aptCustIdCol" prefWidth="83.0" text="Customer ID" />
+          <TableColumn fx:id="aptTitleCol" prefWidth="172.0" text="Title" />
+            <TableColumn fx:id="aptDescCol" prefWidth="144.0" text="Description" />
+            <TableColumn fx:id="aptLocCol" minWidth="0.0" prefWidth="107.0" text="Location" />
+            <TableColumn fx:id="aptContactCol" prefWidth="76.0" text="Contact" />
+            <TableColumn fx:id="aptTypeCol" prefWidth="78.0" text="Type" />
+            <TableColumn fx:id="aptSDateCol" prefWidth="101.0" text="Start Date/Time" />
+            <TableColumn fx:id="aptEDateCol" prefWidth="102.0" text="End Date/Time" />
         </columns>
       </TableView>
       <Button fx:id="editApt" layoutX="964.0" layoutY="150.0" mnemonicParsing="false" onAction="#onEditApt" prefHeight="25.0" prefWidth="59.0" text="Edit" />
