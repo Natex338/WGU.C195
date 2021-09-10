@@ -140,6 +140,10 @@ public class Appointment {
         return errorMessage;
     }
 
+    public String toString (){
+        return aptLocation;
+    }
+
 
 
 }

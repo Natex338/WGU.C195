@@ -57,6 +57,7 @@ public class LoginScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         if (Locale.getDefault().getLanguage().equals("fr")||Locale.getDefault().getLanguage().equals("en"))
         try {
            rb = ResourceBundle.getBundle("sample/Nat", Locale.getDefault());

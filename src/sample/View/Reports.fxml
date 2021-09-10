@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Reports">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
     <children>
         <Button fx:id="onHomePage" layoutX="931.0" layoutY="20.0" mnemonicParsing="false" onAction="#onHomePage" prefHeight="25.0" prefWidth="88.0" text="HomePage" />
         <TableView fx:id="aptByContact" layoutX="24.0" layoutY="115.0" prefHeight="154.0" prefWidth="929.0">
@@ -30,7 +30,7 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-      <ChoiceBox fx:id="contactCombo" layoutX="252.0" layoutY="81.0" prefWidth="150.0" onAction="#onCantactCombo" />
+      <ChoiceBox fx:id="contactCombo" layoutX="252.0" layoutY="81.0" onAction="#onCantactCombo" prefWidth="150.0" />
       <Label layoutX="18.0" layoutY="78.0" prefHeight="27.0" prefWidth="234.0" text="Appointment list by Contact:">
          <font>
             <Font size="18.0" />
@@ -53,7 +53,7 @@
           <TableColumn fx:id="byTypeCount" minWidth="0.0" prefWidth="48.0" text="Count" />
         </columns>
       </TableView>
-      <TableView layoutX="24.0" layoutY="319.0" prefHeight="200.0" prefWidth="843.0">
+      <TableView fx:id="byLocationView" layoutX="24.0" layoutY="319.0" prefHeight="200.0" prefWidth="843.0">
         <columns>
             <TableColumn fx:id="aptIDCol1" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="aptTitleCol1" prefWidth="75.0" text="Title" />
@@ -70,6 +70,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="LocationCombo" layoutX="272.0" layoutY="286.0" prefWidth="150.0" />
+      <ComboBox fx:id="locationCombo" layoutX="272.0" layoutY="286.0" onAction="#onLocationCombo" prefWidth="150.0" />
     </children>
 </AnchorPane>
