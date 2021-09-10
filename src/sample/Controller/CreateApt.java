@@ -20,6 +20,7 @@ import sample.Utils.DBContact;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -58,6 +59,7 @@ public class CreateApt implements Initializable {
     @FXML
     private ComboBox <LocalTime> endTimeField;
 
+
     private LocalTime start = LocalTime.of(8,00);
     private LocalTime end = LocalTime.of(23,00);
 
@@ -92,6 +94,7 @@ public class CreateApt implements Initializable {
             String aptDesc = descriptionField.getText();
             String aptLocation = locationField.getText();
             String aptType = typeField.getText();
+
             LocalDateTime startDate = startDateField.getValue().atTime(startTimeField.getValue());
             LocalDateTime endDate = endDateField.getValue().atTime(endTimeField.getValue());
             int contactID = contactField.getSelectionModel().getSelectedItem().getContactID();

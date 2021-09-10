@@ -150,23 +150,23 @@ public class LoginScreen implements Initializable {
 
     public void aptCheck() throws SQLException {
         LocalDateTime now = LocalDateTime.now();
+        int i=0;
         for (Appointment c :DBAppointments.getAllApt()){
-            if (c.getUserID()==loggedInUser.getUserID()) {
-                if (c.getStartDateTime().toLocalDate().equals(now.toLocalDate())) {
-                    if (c.getStartDateTime().isAfter(LocalDateTime.now()) && c.getStartDateTime().isBefore(LocalDateTime.now().plusMinutes(15)))   {
-                        Alert apt = new Alert(Alert.AlertType.INFORMATION);
-                        apt.setTitle("You have a appointment coming up!");
-                        apt.setContentText("Appointment at: " + c.getStartDateTime() + " \n" + " Appointment ID:" + c.getAptID() + " \n Appointment Description:" + c.getAptDesc());
-                        apt.showAndWait();
-                    }
-                    }
-                else {
+            if (c.getStartDateTime().toLocalDate().equals(now.toLocalDate())) {
+                if (c.getStartDateTime().isAfter(LocalDateTime.now()) && c.getStartDateTime().isBefore(LocalDateTime.now().plusMinutes(15)))   {
                     Alert apt = new Alert(Alert.AlertType.INFORMATION);
-                    apt.setTitle("You have no up coming appointments!");
-                    apt.setHeaderText("There are no up coming Appointments");
+                    apt.setTitle("You have a appointment coming up!");
+                    apt.setContentText("Appointment at: " + c.getStartDateTime() + " \n" + " Appointment ID:" + c.getAptID() + " \n Appointment Description:" + c.getAptDesc());
                     apt.showAndWait();
+                    i++;
                 }
             }
         }
+        if (i==0){
+                Alert apt = new Alert(Alert.AlertType.INFORMATION);
+                apt.setTitle("You have no up coming appointments!");
+                apt.setHeaderText("There are no up coming Appointments");
+                apt.showAndWait();
+            }
+        }
     }
-}
