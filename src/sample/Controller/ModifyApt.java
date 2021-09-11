@@ -14,14 +14,11 @@ import sample.Model.*;
 import sample.Utils.DBAppointments;
 import sample.Utils.DBConnection;
 import sample.Utils.DBContact;
-
-import javax.lang.model.element.NestingKind;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -55,8 +52,8 @@ public class ModifyApt implements Initializable {
     @FXML
     private ComboBox <Customer> customerIDcombo;
 
-    private LocalTime start = LocalTime.of(8,00);
-    private LocalTime end = LocalTime.of(22,00);
+    private LocalTime start = LocalTime.of(0,00);
+    private LocalTime end = LocalTime.of(23,54);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,7 +111,7 @@ public class ModifyApt implements Initializable {
     }
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
-
+        String error;
         String title= titleField.getText();
         String description=descriptionField.getText();
         String location= locationField.getText();
@@ -125,25 +122,35 @@ public class ModifyApt implements Initializable {
         int customerID = customerIDcombo.getSelectionModel().getSelectedItem().getCustomerID();
         int userID = useridCombo.getSelectionModel().getSelectedItem().getUserID();
 
-        holdApt.setAptTitle(title);
-        holdApt.setAptDesc(description);
-        holdApt.setAptLocation(location);
-        holdApt.setAptType(type);
-        holdApt.setStartDate(sTime);
-        holdApt.setEndDate(eTime);
-        holdApt.setContactID(contactID);
-        holdApt.setCustomerID(customerID);
-        holdApt.setUserID(userID);
+        error= Appointment.isValidApt(title,description,location,type,sTime,eTime);
+        boolean overlapCheck = DBAppointments.appointmentOverlap(sTime,eTime, holdApt.getAptID(),customerID);
+        if (DBAppointments.estCheck(sTime,eTime)&& error.isEmpty() &&overlapCheck){
+            holdApt.setAptTitle(title);
+            holdApt.setAptDesc(description);
+            holdApt.setAptLocation(location);
+            holdApt.setAptType(type);
+            holdApt.setStartDate(sTime);
+            holdApt.setEndDate(eTime);
+            holdApt.setContactID(contactID);
+            holdApt.setCustomerID(customerID);
+            holdApt.setUserID(userID);
+            DBAppointments.updateAppointment(holdApt);
 
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/homePage.fxml")));
+            Scene scene = new Scene(root);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.setTitle("HomePage");
+            window.show();
+        }
+        else if (!error.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Not a valid Appointment");
+            alert.setHeaderText("Missing Appointment Info");
+            alert.setContentText(error);
+            alert.showAndWait();
+        }
 
-        DBAppointments.updateAppointment(holdApt);
-
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/homePage.fxml")));
-        Scene scene = new Scene(root);
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.setTitle("HomePage");
-        window.show();
 
     }
 

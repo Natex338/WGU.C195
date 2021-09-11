@@ -2,7 +2,6 @@ package sample.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Controller.LoginScreen;
-import sample.Model.Appointment;
 import sample.Model.Customer;
 import java.sql.*;
 
@@ -54,7 +53,6 @@ public abstract class DBCustomer {
             ps.setInt(6,ID);
             ps.setString(7,createdBY);
             ps.setInt(8, custID);
-            System.out.println(custID);
             ps.execute();
 
         } catch (Exception e) {

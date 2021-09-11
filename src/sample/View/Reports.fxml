@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
     <children>
         <Button fx:id="onHomePage" layoutX="931.0" layoutY="20.0" mnemonicParsing="false" onAction="#onHomePage" prefHeight="25.0" prefWidth="88.0" text="HomePage" />
         <TableView fx:id="aptByContact" layoutX="24.0" layoutY="115.0" prefHeight="154.0" prefWidth="929.0">

@@ -2,10 +2,12 @@ package sample.Utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import sample.Controller.LoginScreen;
 import sample.Model.Appointment;
 import sample.Model.Reports;
 
+import java.security.AllPermission;
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -69,6 +71,33 @@ public abstract class  DBAppointments {
             System.out.println(e.getMessage());
         }
         return DBallByContact;
+    }
+
+    public static ObservableList<Appointment> getAllAptbyCustomer(int cID) throws SQLException {
+        ObservableList<Appointment> DBallByCustomer = FXCollections.observableArrayList();
+        try {
+            Statement statement = DBQuery.getStatement();
+            String byCustomer = "SELECT * FROM appointments, contacts WHERE appointments.Contact_ID = contacts.Contact_ID AND appointments.Customer_ID= " + cID + ";";
+            ResultSet result = statement.executeQuery(byCustomer);
+            while (result.next()) {
+                int aptId = result.getInt("Appointment_ID");
+                String aptTitle = result.getString("Title");
+                String aptDesc = result.getString("Description");
+                String aptLocation = result.getString("Location");
+                String aptType = result.getString("Type");
+                LocalDateTime startDate = result.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime endDate = result.getTimestamp("End").toLocalDateTime();
+                int contactID = result.getInt("Contact_ID");
+                int customerID = result.getInt("Customer_ID");
+                int userID = result.getInt("User_ID");
+                String contactName = result.getString("Contact_Name");
+                Appointment a = new Appointment(aptId, aptTitle, aptDesc, aptLocation, aptType, startDate, endDate, contactID, customerID, userID, contactName);
+                DBallByCustomer.add(a);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return DBallByCustomer;
     }
 
     public static void insertAppointment(Appointment c) throws SQLException {
@@ -196,7 +225,6 @@ public abstract class  DBAppointments {
         return byType;
     }
 
-
     public static ObservableList<Appointment> getAllAptbyLocation(String location) throws SQLException {
         ObservableList<Appointment> DBallByLocation = FXCollections.observableArrayList();
         try {
@@ -224,16 +252,52 @@ public abstract class  DBAppointments {
         }
         return DBallByLocation;
     }
-    public static boolean estCheck(LocalDateTime time ){
+
+    public static boolean estCheck(LocalDateTime start, LocalDateTime end ){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         LocalTime closed = LocalTime.of(22, 0);
         LocalTime open = LocalTime.of(8, 0);
         ZoneId EST = ZoneId.of("US/Eastern");
-        ZonedDateTime localToEST = time.atZone(ZoneId.systemDefault()).withZoneSameInstant(EST);
-        LocalTime time2 = localToEST.toLocalTime();
-        if (time2.isAfter(closed)| time2.isBefore(open))
-            return true;
-        return false;
+
+        ZonedDateTime localStartToEST = start.atZone(ZoneId.systemDefault()).withZoneSameInstant(EST);
+        LocalTime Start2 = localStartToEST.toLocalTime();
+        ZonedDateTime localEndToEST = end.atZone(ZoneId.systemDefault()).withZoneSameInstant(EST);
+        LocalTime end2 = localEndToEST.toLocalTime();
+
+        if (Start2.isAfter(closed)| Start2.isBefore(open) | end2.isBefore(open)| end2.isAfter(closed)) {
+            alert.setHeaderText("Appointment Times must be between 8 to 10 Est");
+            alert.setContentText("Appointment must be between 8 to 10 EST");
+            alert.showAndWait();
+            return false;
+        }
+
+        return true;
     }
+
+    public static boolean appointmentOverlap(LocalDateTime stime, LocalDateTime etime, int aptID, int cId) throws SQLException {
+        ObservableList<Appointment> allApts= getAllAptbyCustomer(cId);
+        for (Appointment a : allApts){
+            if (stime.isAfter(a.getStartDateTime()) && stime.isBefore(a.getEndDateTime()) ||
+                        (etime.isAfter(a.getStartDateTime()) && etime.isBefore(a.getEndDateTime())) ||
+                        (stime.isAfter(a.getStartDateTime()) && stime.isBefore(a.getEndDateTime())) ||
+                        (stime.equals(a.getStartDateTime()) || stime.equals(a.getEndDateTime())) ||
+                        (etime.equals(a.getEndDateTime()) || etime.equals(a.getStartDateTime()))
+                        || stime.isBefore(a.getStartDateTime()) && etime.isAfter(a.getEndDateTime())) {
+
+                if (a.getAptID() != aptID || aptID == -1) {
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("OVERLAPPING VISITS");
+                    alert.setHeaderText("Visit is Overlapping with VisitID: " + a.getAptID());
+                    alert.setContentText("Visit overlapping please fix before saving");
+                    alert.showAndWait();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
 }
 

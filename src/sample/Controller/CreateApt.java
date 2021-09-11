@@ -102,8 +102,13 @@ public class CreateApt implements Initializable {
             int userID = userIDcombo.getSelectionModel().getSelectedItem().getUserID();
             String contactName = contactField.getSelectionModel().getSelectedItem().getContactName();
             error=(Appointment.isValidApt(aptTitle,aptDesc,aptLocation,aptType,startDate,endDate));
+            boolean overlapCheck = DBAppointments.appointmentOverlap(startDate,endDate, -1,customerID);
 
-            if (error.isEmpty()){
+
+
+
+
+            if (error.isEmpty() && DBAppointments.estCheck(startDate,endDate) && overlapCheck){
 
                 Appointment a = new Appointment (aptTitle, aptDesc, aptLocation, aptType, startDate,endDate, contactID, customerID,userID,contactName);
                 DBAppointments.insertAppointment(a);
@@ -115,7 +120,7 @@ public class CreateApt implements Initializable {
                 window.setTitle("HomePage");
                 window.show();
             }
-            else {
+            else if (!error.isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Not a valid Appointment");
                 alert.setHeaderText("Missing Appointment Info");

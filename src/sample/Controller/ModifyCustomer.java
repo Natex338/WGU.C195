@@ -114,7 +114,12 @@ public class ModifyCustomer implements Initializable {
             window.setTitle("Customers");
             window.show();
         }
-        else System.out.println("shit is empty");
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Missing ALL required fields");
+            alert.setHeaderText("Fill out all fields before saving");
+            alert.showAndWait();
+        }
     }
 
     public void onCountrySelect(ActionEvent actionEvent) {
