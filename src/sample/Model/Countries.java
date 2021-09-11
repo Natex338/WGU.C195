@@ -158,9 +158,11 @@ public class Countries {
     }
 
     /**
+     * Lambda #2 used to concatenate Country ID and Country for drop down
      * @return Overiding the toString method to print country ID and Country
      */
     public String toString() {
-        return country_Id + "- " + country;
+        GenInterface message = s ->  s + "- " + country;
+        return message.getMessage(Integer.toString(country_Id));
     }
 }

@@ -2,7 +2,7 @@ package sample.Model;
 
 
 /**
- * Contact Classs
+ * Contact Class
  */
 public class Contact {
     /**
