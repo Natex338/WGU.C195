@@ -1,24 +1,31 @@
 package sample.Model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import sample.Utils.DBQuery;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
-
+/**
+ * Contact Classs
+ */
 public class Contact {
-
+    /**
+     * Contact class variables.
+     */
     private int contactID;
     private String contactName;
     private String email;
 
+    /**
+     * @param contactID  Contact ID
+     * @param contactName Contact Name
+     * @param email Contact Email
+     */
     public Contact(int contactID, String contactName, String email){
         this.contactID=contactID;
         this.contactName=contactName;
         this.email=email;
     }
 
+    /**
+     * Contact getters
+     */
     public int getContactID() {
         return contactID;
     }
@@ -29,6 +36,9 @@ public class Contact {
         return email;
     }
 
+    /**
+     * Contact setters
+     */
     public void setContactID(int contactID) {
         this.contactID = contactID;
     }
@@ -39,7 +49,9 @@ public class Contact {
         this.email = email;
     }
 
-
+    /**
+     * overriding to string method to print contact name.
+     */
     public String toString(){
         return contactName;
     }

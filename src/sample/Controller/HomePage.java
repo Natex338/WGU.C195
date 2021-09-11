@@ -19,13 +19,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Home page after login
+ */
 public class HomePage implements Initializable {
 
-
+    /**
+     * controller fields and tables.
+     */
     @FXML
     private TableColumn<Appointment, Integer> userIDField;
     @FXML
@@ -63,7 +69,9 @@ public class HomePage implements Initializable {
     public static Appointment modApt;
 
 
-
+    /**
+     *  sets all the table views data and field's with appointment fields, gets all the data from the database.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -86,6 +94,9 @@ public class HomePage implements Initializable {
     }
 
 
+    /**
+     * @param actionEvent Prompts you with an alert asking if you are sure you want to exit the program.
+     */
     public void onExitButton(ActionEvent actionEvent) {
             Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);
             exitAlert.setTitle("Exiting Program");
@@ -96,8 +107,12 @@ public class HomePage implements Initializable {
                 System.exit(0);
     }
 
+    /**``
+     * @param actionEvent takes you to view all customers view.
+     * @throws IOException throws error if it cant find the viewcustomer.fxml file.
+     */
     public void onViewCustomers(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/viewCustomers.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/viewCustomers.fxml")));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -105,8 +120,12 @@ public class HomePage implements Initializable {
         window.show();
     }
 
+    /**
+     * @param actionEvent takes you to create appointment view.
+     * @throws IOException throws error if it cant find the CreateApt.fxml
+     */
     public void onVewAddApt(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/CreateApt.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/CreateApt.fxml")));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -115,8 +134,12 @@ public class HomePage implements Initializable {
 
     }
 
+    /**
+     * @param actionEvent takes you to the reports view.
+     * @throws IOException throws error if it cant find the Reports.fxml
+     */
     public void onClickReports(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/Reports.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/Reports.fxml")));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -124,18 +147,26 @@ public class HomePage implements Initializable {
         window.show();
     }
 
+    /**
+     * @param actionEvent takes you to edit an appointment screen.
+     * @throws IOException throws error if it cant find the ModifyApt.fxml
+     */
     public void onEditApt(ActionEvent actionEvent) throws IOException {
 
         if (userAptList.getSelectionModel().getSelectedIndex() != -1) {
             modApt = userAptList.getSelectionModel().getSelectedItem();
 
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/ModifyApt.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/ModifyApt.fxml")));
             Scene scene = new Scene(root);
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.setTitle("Customers");
             window.show();
         }
+
+        /**
+         *Throws error if appointment isn't selected.
+         */
         else {
             Alert alert2 = new Alert(Alert.AlertType.ERROR);
             alert2.setTitle("Please Select a Appointment to Edit");
@@ -144,6 +175,13 @@ public class HomePage implements Initializable {
         }
 
     }
+
+    /**
+     * lambda expression #1 is used to simplify the button selection
+     * @param actionEvent prompts are you sure you want to cancel appointment. if yes it will remove it from the table view and remove it from the database.
+     * @throws SQLException throws SQL error if there is issues removing the data.
+     */
+
 
     public void onRemoveApt(ActionEvent actionEvent) throws SQLException {
         if (userAptList.getSelectionModel().getSelectedIndex()==-1){
@@ -177,10 +215,18 @@ public class HomePage implements Initializable {
         }
     }
 
+    /**
+     * @param actionEvent Sets tabel view with all appointments.
+     * @throws SQLException throws error if issue with SQL Database.
+     */
     public void onALLview(ActionEvent actionEvent) throws SQLException {
         userAptList.setItems(DBAppointments.getAllApt());
     }
 
+    /**
+     * @param actionEvent set table view to show only this month's appointments.
+     * @throws SQLException throws error if issue with SQL Database.
+     */
     public void onByMonth(ActionEvent actionEvent) throws SQLException {
         ObservableList<Appointment>byMonth = FXCollections.observableArrayList();
 
@@ -192,6 +238,10 @@ public class HomePage implements Initializable {
         }
     }
 
+    /**
+      * @param actionEvent set table view to show only this week's appointments.
+      * @throws SQLException throws error if issue with SQL Database.
+     */
     public void onByWeek(ActionEvent actionEvent) throws SQLException {
         ObservableList<Appointment>byWeek = FXCollections.observableArrayList();
 

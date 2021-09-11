@@ -1,6 +1,6 @@
 package sample.Controller;
 
-import javafx.beans.value.ObservableObjectValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,17 +15,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Contact;
-import sample.Model.Customer;
 import sample.Model.Reports;
 import sample.Utils.DBAppointments;
 import sample.Utils.DBContact;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Month;
 import java.util.ResourceBundle;
 
+/**
+ * reports controller
+ */
 public class ReportControler implements Initializable {
 
     @FXML
@@ -83,8 +84,16 @@ public class ReportControler implements Initializable {
     @FXML
     private TableColumn <Appointment, Integer> aptCustIdCol1;
 
+    /**
+     * @param url  gets all the data for the reports
+     * @param resourceBundle sets all the data gathered for the reports
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        /**
+         * gets and sets the locations combo box.
+         */
+
         ObservableList<String> listocationList= FXCollections.observableArrayList();
         try {
             for (Appointment a : DBAppointments.getAllApt()) {
@@ -95,19 +104,24 @@ public class ReportControler implements Initializable {
             catch (SQLException e) {
                 e.printStackTrace();
             }
-
+/**
+ * gets and sets the contact selection combo box.
+ * sets the appointment by type table view.
+ * sets the appointment view by month table view.
+ */
 
             contactCombo.setItems(DBContact.DBallcontacts());
             AptByTypeView.setItems(DBAppointments.getReportDataType());
             aptByMonthView.setItems(DBAppointments.getReportDataMonth());
 
+
+        /**
+         * sets all the tabel views columns and with correct data.
+         */
             aptByTypeField.setCellValueFactory(new PropertyValueFactory<>("type"));
             byTypeCount.setCellValueFactory(new PropertyValueFactory<>("typeCount"));
-
-
             aptMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
             count.setCellValueFactory(new PropertyValueFactory<>("monthCount"));
-
             aptIDCol.setCellValueFactory(new PropertyValueFactory<>("aptID"));
             aptTitleCol.setCellValueFactory(new PropertyValueFactory<>("aptTitle"));
             aptDescCol.setCellValueFactory(new PropertyValueFactory<>("aptDesc"));
@@ -117,8 +131,6 @@ public class ReportControler implements Initializable {
             aptSDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
             aptEDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
             aptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-
-
             aptIDCol1.setCellValueFactory(new PropertyValueFactory<>("aptID"));
             aptTitleCol1.setCellValueFactory(new PropertyValueFactory<>("aptTitle"));
             aptDescCol1.setCellValueFactory(new PropertyValueFactory<>("aptDesc"));
@@ -131,6 +143,10 @@ public class ReportControler implements Initializable {
         }
 
 
+    /**
+     * @param actionEvent takes you back to the home page.
+     * @throws IOException throws error if it cant find the homepage.fxml
+     */
         public void onHomePage(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/homePage.fxml"));
         Scene scene = new Scene(root);
@@ -142,11 +158,19 @@ public class ReportControler implements Initializable {
     }
 
 
+    /**
+     * @param actionEvent when selecting the contact from the list it sets the table view.
+     * @throws SQLException if it has issues accessing or writing to the database it throws error.
+     */
     public void onCantactCombo(ActionEvent actionEvent) throws SQLException {
         aptByContact.setItems(DBAppointments.getAllAptbyContact(contactCombo.getSelectionModel().getSelectedItem().getContactID()));
     }
 
 
+    /**
+     * @param actionEvent when making location selection it assigns the table view with selection
+     * @throws SQLException if it has issues accessing or writing to the database it throws error.
+     */
     public void onLocationCombo(ActionEvent actionEvent) throws SQLException {
         for (String s : locationCombo.getItems()){
             if (locationCombo.getSelectionModel().getSelectedItem().equals(s)){
@@ -154,9 +178,6 @@ public class ReportControler implements Initializable {
                 break;
             }
         }
-
-
-
 
     }
 }

@@ -8,6 +8,9 @@ import sample.Model.User;
 import java.security.PublicKey;
 import java.sql.*;
 
+/**
+ * DAO for the connection
+ */
 public abstract class DBConnection {
 
     private static final String protocol = "jdbc";
@@ -21,6 +24,9 @@ public abstract class DBConnection {
     private static Connection conn= null;
 
 
+    /**
+     * @return returns the start of the connection
+     */
     public static Connection startConnection(){
         try{
             Class.forName(MYSQLJBCDriver);
@@ -32,6 +38,9 @@ public abstract class DBConnection {
         return conn;
     }
 
+    /**
+     * Closes the connection
+     */
     public static void closeConnection(){
         try {
             conn.close();
@@ -41,6 +50,10 @@ public abstract class DBConnection {
             //do nothing :)
         }
     }
+
+    /**
+     * @return returns all users
+     */
     public static ObservableList<User> getAllUsers(){
         ObservableList<User> DBUsers = FXCollections.observableArrayList();
         try {

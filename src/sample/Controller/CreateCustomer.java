@@ -25,6 +25,9 @@ import java.util.ResourceBundle;
 
 import static sample.Utils.DBCountries.getAllRegionsByCountry;
 
+/**
+ * Create customer controller and controler fields
+ */
 public class CreateCustomer implements Initializable {
     @FXML
     private ComboBox<Countries> countryCombo;
@@ -41,7 +44,9 @@ public class CreateCustomer implements Initializable {
     @FXML
     private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
 
-
+    /**
+     * sets the country selection list
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -54,6 +59,10 @@ public class CreateCustomer implements Initializable {
         }
 
 
+    /**
+     * @param actionEvent when clicking cancel it prompts to confirm you want to exit without saving.
+     * @throws IOException throws error if it can find the view customer file.
+     */
     public void onCancelApt(ActionEvent actionEvent) throws IOException {
 
         Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);
@@ -71,6 +80,10 @@ public class CreateCustomer implements Initializable {
         }
     }
 
+    /**
+     * @param actionEvent clicking save it gathers data and check for valid info, if its valid saves customer to the database.
+     * @throws IOException throws error if it can't find the view customer FXML.
+     */
     public void onSaveButton(ActionEvent actionEvent) throws IOException {
         String name = namefield.getText();
         String address = addressfield.getText();
@@ -79,6 +92,9 @@ public class CreateCustomer implements Initializable {
         int country=-1;
         int divisionID= -1;
 
+        /**
+         * Customer validity check
+         */
         if(Customer.validCustomer(name,address,phone,postal) ){
             if ((countryCombo.getSelectionModel().getSelectedIndex())!=-1){
                 country = countryCombo.getSelectionModel().getSelectedItem().getCountry_Id();
@@ -106,6 +122,9 @@ public class CreateCustomer implements Initializable {
 
     }
 
+    /**
+     * @param actionEvent once the country is selected the fist division data field is set with specific to the country.
+     */
     public void onCountrySelect(ActionEvent actionEvent) {
         Countries bp = (Countries) countryCombo.getSelectionModel().getSelectedItem();
         regionCombo.setItems(getAllRegionsByCountry( bp.getCountry_Id()));

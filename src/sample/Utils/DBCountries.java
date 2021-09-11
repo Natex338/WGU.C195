@@ -13,9 +13,16 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * DAO for Countries
+ */
 public abstract class DBCountries {
 
 
+    /**
+     * @return Returns all countries list
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static ObservableList<Countries> getAllCountries() throws SQLException {
         ObservableList<Countries> DBallCountries = FXCollections.observableArrayList();
         try {
@@ -45,6 +52,10 @@ public abstract class DBCountries {
     
     */
 
+    /**
+     * @param cID Country ID being searched.
+     * @return returns all regions that match the country ID
+     */
     public static ObservableList<String> getAllRegionsByCountry  (int cID){
      ObservableList<String>regionsList = FXCollections.observableArrayList();
         try {

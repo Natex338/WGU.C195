@@ -5,9 +5,15 @@ import sample.Controller.LoginScreen;
 import sample.Model.Customer;
 import java.sql.*;
 
+/**
+ * DOA for Customers
+ */
 public abstract class DBCustomer {
 
 
+    /**
+     * @param customer Customer being added to the Database
+     */
     public static void insertCustomer(Customer customer) {
         String customerName =customer.getCustomerName();
         String address = customer.getAddress();
@@ -33,6 +39,9 @@ public abstract class DBCustomer {
         }
     }
 
+    /**
+     * @param customer Customer being updated in the database
+     */
     public static void updateCustomer(Customer customer){
         String customerName =customer.getCustomerName();
         String address = customer.getAddress();
@@ -60,6 +69,10 @@ public abstract class DBCustomer {
         }
     }
 
+    /**
+     * @return returns all customer objects
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         try {
@@ -90,6 +103,10 @@ public abstract class DBCustomer {
         return allCustomers;
     }
 
+    /**
+     * @param customer customer being deleted from the database
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static void deleteCustomer(Customer customer) throws SQLException {
 
         String deleteStatement = "DELETE FROM customers WHERE Customer_ID = ?;";

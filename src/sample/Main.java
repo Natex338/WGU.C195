@@ -16,6 +16,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+    /**
+     * @param stage Start the application and load the Login screen
+     * @throws IOException throws error if it cant find the loginScreen.Fxml
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("View/LoginScreen.fxml"));
@@ -25,6 +29,9 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * opens the connection the database and closes it also launches the application.
+     */
     public static void main(String[] args) throws SQLException {
 
         Connection conn = DBConnection.startConnection();

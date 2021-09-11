@@ -3,6 +3,7 @@ package sample.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -23,22 +24,37 @@ import java.util.ResourceBundle;
 
 import static sample.Utils.DBCountries.getAllRegionsByCountry;
 
+/**
+ * Modify customer controller
+ */
 public class ModifyCustomer implements Initializable {
-
-    public ComboBox<Countries> countryCombo;
-    public ChoiceBox<String> regionCombo;
-    public TextField namefield;
-    public TextField addressfield;
-    public TextField phonefield;
-    public TextField postalfield;
-    public Label custIDfield;
+    @FXML
+    private ComboBox<Countries> countryCombo;
+    @FXML
+    private ChoiceBox<String> regionCombo;
+    @FXML
+    private TextField namefield;
+    @FXML
+    private TextField addressfield;
+    @FXML
+    private TextField phonefield;
+    @FXML
+    private TextField postalfield;
+    @FXML
+    private Label custIDfield;
     private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
     private Customer holdCustomer;
 
 
+    /**
+     * @param url sets the country fields
+     * @param resourceBundle populates the customer data in fields
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+/**
+ * gets all the countries from the database and sets the country combo box with them.
+ */
         try {
             allCountries.addAll(DBCountries.getAllCountries());
             countryCombo.setItems(allCountries);
@@ -46,14 +62,18 @@ public class ModifyCustomer implements Initializable {
             e.printStackTrace();
         }
 
-
+/**
+ * sets all the customer fields with the customer that is selected info.
+ */
         holdCustomer = ViewCustomers.modCustomer;
         custIDfield.setText(String.valueOf(holdCustomer.getCustomerID()));
         namefield.setText(holdCustomer.getCustomerName());
         addressfield.setText(holdCustomer.getAddress());
         phonefield.setText(holdCustomer.getCustomerPhone());
         postalfield.setText(holdCustomer.getCustomerPostal());
-
+/**
+ *  once the country is selected sets all the first division data with
+ */
         for (Countries c : countryCombo.getItems()){
             if (holdCustomer.getCountryId()==c.getCountry_Id()){
                 countryCombo.setValue(c);
@@ -61,7 +81,9 @@ public class ModifyCustomer implements Initializable {
             }
 
         }
-
+/**
+ * once a country is selected it sets the regions with appropriate data.
+ */
         regionCombo.setItems(getAllRegionsByCountry(holdCustomer.getCountryId()));
         for (String c : regionCombo.getItems()){
             if (Objects.equals(holdCustomer.getDivision(), c)){
@@ -72,7 +94,10 @@ public class ModifyCustomer implements Initializable {
     }
 
 
-
+    /**
+     * @param actionEvent prompts are you sure you want to cancle without saving.
+     * @throws IOException throws error if it cant acces the viewcustomer.fxml
+     */
     public void onCancelApt(ActionEvent actionEvent) throws IOException {
 
         Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);
@@ -90,13 +115,25 @@ public class ModifyCustomer implements Initializable {
         }
     }
 
+    /**
+     * @param actionEvent  when clicking the save button it check the data and saves it to the database.
+     * @throws IOException throws error if it cant access viewcustomer.fxml
+     */
     public void onSaveButton(ActionEvent actionEvent) throws IOException {
+        /**
+         * local instance variables to do validity check
+         */
+
         String name = namefield.getText();
         String address = addressfield.getText();
         String phone = phonefield.getText();
         String postal = postalfield.getText();
         int country = countryCombo.getSelectionModel().getSelectedItem().getCountry_Id();
         int divisionID = Countries.getDivision(regionCombo.getValue());
+
+        /**
+         * customer validity checks
+         */
 
         if(Customer.validCustomer(name,address,phone,postal) ){
             holdCustomer.setCustomerName(name);
@@ -122,6 +159,9 @@ public class ModifyCustomer implements Initializable {
         }
     }
 
+    /**
+     * @param actionEvent sets the region fields based off the country selections.
+     */
     public void onCountrySelect(ActionEvent actionEvent) {
         Countries bp = (Countries) countryCombo.getSelectionModel().getSelectedItem();
         regionCombo.setItems(getAllRegionsByCountry( bp.getCountry_Id()));

@@ -7,7 +7,13 @@ import sample.Model.Contact;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+/**
+ * DOA for contacts
+ */
 public abstract class DBContact {
+    /**
+     * @return returns all contacts
+     */
     public static ObservableList<Contact> DBallcontacts() {
         ObservableList<Contact> DBallcontacts = FXCollections.observableArrayList();
         try {

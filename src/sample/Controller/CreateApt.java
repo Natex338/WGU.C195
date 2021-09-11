@@ -1,6 +1,5 @@
 package sample.Controller;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,20 +19,20 @@ import sample.Utils.DBContact;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class created the appointments and handles processing the data
+ */
 public class CreateApt implements Initializable {
 
-
+    /**
+     * Class variables
+     */
     @FXML
     private ComboBox <User> userIDcombo;
     @FXML
@@ -59,12 +58,23 @@ public class CreateApt implements Initializable {
     @FXML
     private ComboBox <LocalTime> endTimeField;
 
-
+    /**
+     * populates the time fields with hours and mins in 5 min increments
+     */
     private LocalTime start = LocalTime.of(0,00);
     private LocalTime end = LocalTime.of(23,54);
 
 
+    /**
+     * @param url gets the data for the Create Appointment screen.
+     * @param resourceBundle sets the fields
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        /**
+         * sets the contact, user ID and time fields with appropriate data
+         */
+
         contactField.setItems(DBContact.DBallcontacts());
         userIDcombo.setItems(DBConnection.getAllUsers());
         try {
@@ -81,7 +91,17 @@ public class CreateApt implements Initializable {
 
     }
 
+    /**
+     * @param actionEvent logic check for saving new appointments, gets data from fields, and saves to the database.
+     * @throws SQLException throws SQL error instead of breaking
+     * @throws IOException hanles writing the data errors.
+     */
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
+
+        /**
+         * checks to see if fields are empty
+         */
+
         String error = "";
         if (contactField.getValue()==null| customerIDCombo.getValue()==null|userIDcombo.getValue()==null|startTimeField.getValue()==null|endTimeField.getValue()==null) {
             Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -89,7 +109,9 @@ public class CreateApt implements Initializable {
             alert2.setContentText("Missing appointment info");
             alert2.showAndWait();
         }
-
+        /**
+         * if the fields are not empty it gets teh data and does a visit validity check, also check for overlaps
+         */
         else {
             String aptTitle = titleField.getText();
             String aptDesc = descriptionField.getText();
@@ -107,7 +129,9 @@ public class CreateApt implements Initializable {
 
 
 
-
+            /**
+             * if validity check is good with no errors it creates a new appointment and saves it to the database. if not prompts with an error.
+             */
             if (error.isEmpty() && DBAppointments.estCheck(startDate,endDate) && overlapCheck){
 
                 Appointment a = new Appointment (aptTitle, aptDesc, aptLocation, aptType, startDate,endDate, contactID, customerID,userID,contactName);
@@ -120,6 +144,7 @@ public class CreateApt implements Initializable {
                 window.setTitle("HomePage");
                 window.show();
             }
+
             else if (!error.isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Not a valid Appointment");
@@ -131,6 +156,10 @@ public class CreateApt implements Initializable {
         }
 
     }
+
+    /**
+     * clicking the cancle button will do a prompt to check if you are sure you want to cancel.
+     */
 
     public void onCancel(ActionEvent actionEvent) throws IOException {
         Alert exitAlert= new Alert(Alert.AlertType.CONFIRMATION);

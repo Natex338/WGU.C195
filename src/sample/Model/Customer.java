@@ -4,12 +4,12 @@ package sample.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Utils.DBCustomer;
-import sample.Utils.DBQuery;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+
+/**
+ * Customer Class
+ */
 public class Customer  {
     private int customerID;
     private String customerName;
@@ -23,6 +23,17 @@ public class Customer  {
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
     private String addressRegion;
 
+    /**
+     * @param customerID  Customer ID
+     * @param customerName Customer Name
+     * @param address Customer Address
+     * @param customerPostalCode Customer Postal Code
+     * @param region Customer Region
+     * @param customerPhone Customer Phone
+     * @param divID Customer Division ID
+     * @param countryId Customer Country ID
+     * @param countryName Customer Country Name
+     */
     public Customer(int customerID, String customerName, String address,String customerPostalCode, String region, String customerPhone, int divID, int countryId,String countryName){
         this.customerID =customerID;
         this.customerName = customerName;
@@ -35,6 +46,15 @@ public class Customer  {
         this.division=region;
         this.addressRegion = address +", "+ region;
     }
+
+    /**
+     * @param customerName  Customer Name
+     * @param address Customer Address
+     * @param customerPostalCode Customer Postal Code
+     * @param customerPhone Customer Phone
+     * @param divID Customer Division ID
+     * @param countryId Customer Country ID
+     */
     public Customer( String customerName, String address,String customerPostalCode, String customerPhone, int divID, int countryId){
         this.customerName = customerName;
         this.address = address;
@@ -45,6 +65,9 @@ public class Customer  {
 
     }
 
+    /**
+     * Customer Getters
+     */
     public static ObservableList<Customer> getCustomers() throws SQLException {
         return DBCustomer.getAllCustomers();
     }
@@ -81,6 +104,12 @@ public class Customer  {
     public String getCountry() {
         return country;
     }
+
+
+
+    /**
+     * Customer Setters
+     */
 
     public void setCustomerAddress(String customerAddress) {
         this.address = customerAddress;
@@ -119,12 +148,24 @@ public class Customer  {
         Customer.customers = customers;
     }
 
+
+    /**
+     * @param name Customer Name Check
+     * @param address Customer Address Check
+     * @param phone Customer Phone Check
+     * @param postal Customer Postal Check
+     * @return Returns true if fields are not empty.
+     */
     public static boolean validCustomer(String name, String address, String phone, String postal){
         if (name.isEmpty() | address.isEmpty() | phone.isEmpty()|postal.isEmpty()){
             return false;
         }
         else return true;
     }
+
+    /**
+     * @return Overriding the toString method to print Customer Name.
+     */
     public String toString(){
         return customerName;
     }

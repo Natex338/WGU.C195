@@ -6,15 +6,20 @@ import javafx.scene.control.Alert;
 import sample.Controller.LoginScreen;
 import sample.Model.Appointment;
 import sample.Model.Reports;
-
-import java.security.AllPermission;
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 
+/**
+ * DAO for appointments
+ */
 public abstract class  DBAppointments {
 
+    /**
+     * @return returns all Appointments.
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static ObservableList<Appointment> getAllApt() throws SQLException {
         ObservableList<Appointment> DBallAppointments = FXCollections.observableArrayList();
         try {
@@ -45,6 +50,11 @@ public abstract class  DBAppointments {
     }
 
 
+    /**
+     * @param cID Contact ID that is being searched.
+     * @return Returns all Contacts appoinments.
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static ObservableList<Appointment> getAllAptbyContact(int cID) throws SQLException {
         ObservableList<Appointment> DBallByContact = FXCollections.observableArrayList();
         try {
@@ -73,6 +83,11 @@ public abstract class  DBAppointments {
         return DBallByContact;
     }
 
+    /**
+     * @param cID Customer ID that is being searched.
+     * @return returns all customer Appointments by Customer ID
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static ObservableList<Appointment> getAllAptbyCustomer(int cID) throws SQLException {
         ObservableList<Appointment> DBallByCustomer = FXCollections.observableArrayList();
         try {
@@ -100,6 +115,10 @@ public abstract class  DBAppointments {
         return DBallByCustomer;
     }
 
+    /**
+     * @param c Appointment being added to the database
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static void insertAppointment(Appointment c) throws SQLException {
         String aptTitle = c.getAptTitle();
         String aptDesc = c.getAptDesc();
@@ -133,6 +152,10 @@ public abstract class  DBAppointments {
 
     }
 
+    /**
+     * @param cID Customer ID of appointments that will be deleted
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static void deleteCustomerApt(int cID) throws SQLException {
         String deleteStatement = "DELETE FROM appointments WHERE Customer_ID = ?;";
         PreparedStatement ps = DBConnection.startConnection().prepareStatement(deleteStatement);
@@ -141,6 +164,10 @@ public abstract class  DBAppointments {
 
     }
 
+    /**
+     * @param c Appointment ID of appointment that will be deleted.
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static void deleteAppointment(Appointment c) throws SQLException {
         String deleteStatement = "DELETE FROM appointments WHERE Appointment_ID = ?;";
         PreparedStatement ps = DBConnection.startConnection().prepareStatement(deleteStatement);
@@ -149,11 +176,18 @@ public abstract class  DBAppointments {
 
     }
 
+    /**
+     * @param t Local Dat time to be formatted
+     * @return DateTime formated for readability
+     */
     public static String dateTimeFormat(LocalDateTime t) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return t.format(formatter);
     }
 
+    /**
+     * @param appointment Appointment object that is being updated
+     */
     public static void updateAppointment(Appointment appointment) {
         int aptID = appointment.getAptID();
         String aptTitle = appointment.getAptTitle();
@@ -187,6 +221,9 @@ public abstract class  DBAppointments {
         }
     }
 
+    /**
+     * @return Returns appointments by type
+     */
     public static ObservableList<Reports> getReportDataType() {
         ObservableList<Reports>byType= FXCollections.observableArrayList();
 
@@ -206,6 +243,9 @@ public abstract class  DBAppointments {
         return byType;
     }
 
+    /**
+     * @return Returns Appointment data for months
+     */
     public static ObservableList<Reports> getReportDataMonth() {
         ObservableList<Reports>byType= FXCollections.observableArrayList();
 
@@ -225,6 +265,11 @@ public abstract class  DBAppointments {
         return byType;
     }
 
+    /**
+     * @param location appointment location being searched.
+     * @return returns all appointments that match the location.
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static ObservableList<Appointment> getAllAptbyLocation(String location) throws SQLException {
         ObservableList<Appointment> DBallByLocation = FXCollections.observableArrayList();
         try {
@@ -253,6 +298,11 @@ public abstract class  DBAppointments {
         return DBallByLocation;
     }
 
+    /**
+     * @param start Start date/time of appointment
+     * @param end End Date/Time of appointment.
+     * @return returns true of false if the appointment is outside of EST business hours.
+     */
     public static boolean estCheck(LocalDateTime start, LocalDateTime end ){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         LocalTime closed = LocalTime.of(22, 0);
@@ -274,6 +324,14 @@ public abstract class  DBAppointments {
         return true;
     }
 
+    /**
+     * @param stime Start Time of appointment
+     * @param etime End Time of Appointment
+     * @param aptID Appointment ID
+     * @param cId Customer ID
+     * @return Returns true or false if the customer has an overlapping appointment.
+     * @throws SQLException throws SQL error if it can't access the database.
+     */
     public static boolean appointmentOverlap(LocalDateTime stime, LocalDateTime etime, int aptID, int cId) throws SQLException {
         ObservableList<Appointment> allApts= getAllAptbyCustomer(cId);
         for (Appointment a : allApts){
