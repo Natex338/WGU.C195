@@ -13,6 +13,9 @@ Java Version: Java Version 11.0.12<br />
 JavaFX Version: JavaFX-SDK-11.0.2<br />
 MySQL-connector-version: mysql-connector-java-8.0.22<br />
 
+•The Purpose of this program is to provide a scheduling application that can be run in multiple regions and languages, currently
+the only supported languages are english and French. The scheduling app is purposed to only allow appointments during normal
+Business hours of 8am to 10 pm EST. 
 
 • To run the program you must log in with user credentials, once logged in the display will show you all current appointments.
 Buttons and toggles on the top and right of the gui allow you to view customers, sort appointments by month, week and view all.
