@@ -116,7 +116,7 @@ public class ReportControler implements Initializable {
 
 
         /**
-         * sets all the tabel views columns and with correct data.
+         * sets all the table views columns and with correct data.
          */
             aptByTypeField.setCellValueFactory(new PropertyValueFactory<>("type"));
             byTypeCount.setCellValueFactory(new PropertyValueFactory<>("typeCount"));

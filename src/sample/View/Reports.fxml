@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
     <children>
         <Button fx:id="onHomePage" layoutX="931.0" layoutY="20.0" mnemonicParsing="false" onAction="#onHomePage" prefHeight="25.0" prefWidth="88.0" text="HomePage" />
         <TableView fx:id="aptByContact" layoutX="24.0" layoutY="115.0" prefHeight="154.0" prefWidth="929.0">
@@ -41,13 +41,14 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="aptByMonthView" layoutX="48.0" layoutY="571.0" prefHeight="200.0" prefWidth="222.0">
+      <TableView fx:id="aptByMonthView" layoutX="48.0" layoutY="571.0" prefHeight="200.0" prefWidth="234.0">
         <columns>
           <TableColumn fx:id="aptMonth" prefWidth="150.0" text="Month" />
           <TableColumn fx:id="count" minWidth="0.0" prefWidth="71.0" text="Apt Count" />
+
         </columns>
       </TableView>
-      <TableView fx:id="AptByTypeView" layoutX="302.0" layoutY="571.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="AptByTypeView" layoutX="322.0" layoutY="571.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="aptByTypeField" prefWidth="151.0" text="Type" />
           <TableColumn fx:id="byTypeCount" minWidth="0.0" prefWidth="48.0" text="Count" />
