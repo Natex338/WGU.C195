@@ -15,13 +15,15 @@ public abstract class DBConnection {
 
     private static final String protocol = "jdbc";
     private static final String vendorName = ":mysql:";
-    private static final String ipAddress = "//wgudb.ucertify.com:3306/";
-    private static final String dbname = "WJ07MYB";
+    private static final String ipAddress = "//34.83.56.255:3306/";
+    private static final String dbname = "Capstoner";
     private static final String jdbcURL= protocol + vendorName + ipAddress+ dbname;
     private static final String MYSQLJBCDriver= "com.mysql.cj.jdbc.Driver";
-    private static final String userName= "U07MYB";
-    private static final String userPw= "53689069196";
+    private static final String userName= "Natex338";
+    private static final String userPw= "CapstoneProject1358!!";
     private static Connection conn= null;
+    //private static final String jdbcURL="jdbc:mysql://34.83.56.255:3306/Capstoner";
+
 
 
     /**
@@ -30,10 +32,10 @@ public abstract class DBConnection {
     public static Connection startConnection(){
         try{
             Class.forName(MYSQLJBCDriver);
-            conn = (DriverManager.getConnection(jdbcURL,userName,userPw));
+            conn = (DriverManager.getConnection(jdbcURL,userName, userPw));
             System.out.println("Connection Successful");
         } catch (ClassNotFoundException | SQLException e) {
-            e.getStackTrace();
+            System.out.println(e.getMessage());
         }
         return conn;
     }

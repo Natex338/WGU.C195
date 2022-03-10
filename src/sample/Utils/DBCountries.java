@@ -27,7 +27,7 @@ public abstract class DBCountries {
         ObservableList<Countries> DBallCountries = FXCollections.observableArrayList();
         try {
             Statement statement = DBQuery.getStatement();
-            String getAllCustQuery = "SELECT * FROM WJ07MYB.countries;";
+            String getAllCustQuery = "SELECT * FROM countries;";
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
                 int countryID = result.getInt("Country_ID");
@@ -61,7 +61,7 @@ public abstract class DBCountries {
         try {
             Statement statement = DBQuery.getStatement();
 
-            String getAllCustQuery = "SELECT * FROM WJ07MYB.first_level_divisions";
+            String getAllCustQuery = "SELECT * FROM first_level_divisions";
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
                 if (result.getInt("Country_ID")==cID){
