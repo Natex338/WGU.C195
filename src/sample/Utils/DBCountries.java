@@ -3,15 +3,11 @@ package sample.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Model.Countries;
-import sample.Model.Customer;
 
-import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * DAO for Countries

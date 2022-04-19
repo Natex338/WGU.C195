@@ -11,8 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Model.Client;
 import sample.Model.Countries;
-import sample.Model.Customer;
 import sample.Utils.DBCountries;
 import sample.Utils.DBCustomer;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class ModifyCustomer implements Initializable {
     @FXML
     private Label custIDfield;
     private ObservableList<Countries> allCountries= FXCollections.observableArrayList();
-    private Customer holdCustomer;
+    private Client holdClient;
 
 
     /**
@@ -65,17 +65,17 @@ public class ModifyCustomer implements Initializable {
 /**
  * sets all the customer fields with the customer that is selected info.
  */
-        holdCustomer = ViewCustomers.modCustomer;
-        custIDfield.setText(String.valueOf(holdCustomer.getCustomerID()));
-        namefield.setText(holdCustomer.getCustomerName());
-        addressfield.setText(holdCustomer.getAddress());
-        phonefield.setText(holdCustomer.getCustomerPhone());
-        postalfield.setText(holdCustomer.getCustomerPostal());
+        holdClient = ViewCustomers.modClient;
+        custIDfield.setText(String.valueOf(holdClient.getCustomerID()));
+        namefield.setText(holdClient.getCustomerName());
+        addressfield.setText(holdClient.getAddress());
+        phonefield.setText(holdClient.getClientPhone());
+        postalfield.setText(holdClient.getCustomerPostal());
 /**
  *  once the country is selected sets all the first division data with
  */
         for (Countries c : countryCombo.getItems()){
-            if (holdCustomer.getCountryId()==c.getCountry_Id()){
+            if (holdClient.getCountryId()==c.getCountry_Id()){
                 countryCombo.setValue(c);
                 break;
             }
@@ -84,9 +84,9 @@ public class ModifyCustomer implements Initializable {
 /**
  * once a country is selected it sets the regions with appropriate data.
  */
-        regionCombo.setItems(getAllRegionsByCountry(holdCustomer.getCountryId()));
+        regionCombo.setItems(getAllRegionsByCountry(holdClient.getCountryId()));
         for (String c : regionCombo.getItems()){
-            if (Objects.equals(holdCustomer.getDivision(), c)){
+            if (Objects.equals(holdClient.getDivision(), c)){
                 regionCombo.setValue(c);
                 break;
             }
@@ -135,14 +135,14 @@ public class ModifyCustomer implements Initializable {
          * customer validity checks
          */
 
-        if(Customer.validCustomer(name,address,phone,postal) ){
-            holdCustomer.setCustomerName(name);
-            holdCustomer.setCustomerAddress(address);
-            holdCustomer.setCustomerPhone(phone);
-            holdCustomer.setCustomerPostal(postal);
-            holdCustomer.setCountryId(country);
-            holdCustomer.setDivID(divisionID);
-            DBCustomer.updateCustomer(holdCustomer);
+        if(Client.validCustomer(name,address,phone,postal) ){
+            holdClient.setCustomerName(name);
+            holdClient.setCustomerAddress(address);
+            holdClient.setClientPhone(phone);
+            holdClient.setCustomerPostal(postal);
+            holdClient.setCountryId(country);
+            holdClient.setDivID(divisionID);
+            DBCustomer.updateCustomer(holdClient);
 
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/viewCustomers.fxml")));
             Scene scene = new Scene(root);

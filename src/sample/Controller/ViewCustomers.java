@@ -13,23 +13,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
+import sample.Model.Client;
 import sample.Model.Countries;
-import sample.Model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import sample.*;
-import sample.Model.User;
+
 import sample.Utils.DBAppointments;
-import sample.Utils.DBCountries;
 import sample.Utils.DBCustomer;
-import sample.Utils.DBQuery;
 
 
 /**
@@ -44,17 +38,17 @@ public class ViewCustomers implements Initializable {
     @FXML
     private Button deleteCustButton;
     @FXML
-    private TableView<Customer> customerListView;
+    private TableView<Client> customerListView;
     @FXML
-    private TableColumn<Customer, Integer> custIDCol;
+    private TableColumn<Client, Integer> custIDCol;
     @FXML
-    private TableColumn<Customer, String> custNameCol;
+    private TableColumn<Client, String> custNameCol;
     @FXML
-    private TableColumn<Customer, String> custAddrCol;
+    private TableColumn<Client, String> custAddrCol;
     @FXML
-    private TableColumn<Customer, String> custPhoneCol;
+    private TableColumn<Client, String> custPhoneCol;
     @FXML
-    private TableColumn<Customer, String> custCountryCol;
+    private TableColumn<Client, String> custCountryCol;
 
     /**
      * list of all countries
@@ -64,7 +58,7 @@ public class ViewCustomers implements Initializable {
      * public Customer to handle the pass between modify customer and view customer screen.
      */
 
-    public static Customer modCustomer;
+    public static Client modClient;
 
 
     /**
@@ -73,17 +67,17 @@ public class ViewCustomers implements Initializable {
      */
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        custIDCol.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerID"));
-        custNameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));
-        custAddrCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("addressRegion"));
-        custCountryCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("country"));
-        custPhoneCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerPhone"));
+        custIDCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("customerID"));
+        custNameCol.setCellValueFactory(new PropertyValueFactory<Client, String>("customerName"));
+        custAddrCol.setCellValueFactory(new PropertyValueFactory<Client, String>("addressRegion"));
+        custCountryCol.setCellValueFactory(new PropertyValueFactory<Client, String>("country"));
+        custPhoneCol.setCellValueFactory(new PropertyValueFactory<Client, String>("clientPhone"));
 
         /**
          * triess to get all the customers and sets the view.
          */
         try {
-            customerListView.setItems(Customer.getCustomers());
+            customerListView.setItems(Client.getCustomers());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,7 +111,7 @@ public class ViewCustomers implements Initializable {
      */
     public void onModCust(ActionEvent actionEvent) throws IOException {
         if (customerListView.getSelectionModel().getSelectedIndex() != -1) {
-            modCustomer = customerListView.getSelectionModel().getSelectedItem();
+            modClient = customerListView.getSelectionModel().getSelectedItem();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample/View/ModifyCustomer.fxml"));
             Scene scene = new Scene(root);
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -140,12 +134,12 @@ public class ViewCustomers implements Initializable {
      */
     public void onDeleteCust(ActionEvent actionEvent) throws SQLException {
         if (customerListView.getSelectionModel().getSelectedIndex() != -1) {
-            Customer customer = customerListView.getSelectionModel().getSelectedItem();
-            int customerID = customer.getCustomerID();
+            Client client = customerListView.getSelectionModel().getSelectedItem();
+            int customerID = client.getCustomerID();
             if (customerApptDelete(customerID)){
-                DBCustomer.deleteCustomer(customer);
+                DBCustomer.deleteCustomer(client);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Customer: "+ customer.getCustomerName() +" has been Deleted");
+                alert.setHeaderText("Customer: "+ client.getCustomerName() +" has been Deleted");
                 alert.setTitle("Customer Successfully Deleted");
                 alert.showAndWait();
             }

@@ -2,18 +2,14 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.Model.Customer;
 import sample.Utils.DBConnection;
 import sample.Utils.DBQuery;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Main extends Application {
     /**

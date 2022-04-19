@@ -18,8 +18,8 @@ the only supported languages are english and French. The scheduling app is purpo
 Business hours of 8am to 10 pm EST. 
 
 • To run the program you must log in with user credentials, once logged in the display will show you all current appointments.
-Buttons and toggles on the top and right of the gui allow you to view customers, sort appointments by month, week and view all.
-You can add appointments / and clients in their respective screens. Deleting a customer will check if they have appointments and prompt
+Buttons and toggles on the top and right of the gui allow you to view clients, sort appointments by month, week and view all.
+You can add appointments / and clients in their respective screens. Deleting a client will check if they have appointments and prompt
 you to cancel appointments before deletion.
 
 • The additional report is running a query of all appointments that have the same location entered on the appointment.

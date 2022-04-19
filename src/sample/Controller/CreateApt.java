@@ -10,8 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
+import sample.Model.Client;
 import sample.Model.Contact;
-import sample.Model.Customer;
 import sample.Model.User;
 import sample.Utils.DBAppointments;
 import sample.Utils.DBConnection;
@@ -38,7 +38,7 @@ public class CreateApt implements Initializable {
     @FXML
     private Label aptIDText;
     @FXML
-    private ComboBox <Customer>customerIDCombo;
+    private ComboBox <Client>customerIDCombo;
     @FXML
     private TextField titleField;
     @FXML
@@ -78,7 +78,7 @@ public class CreateApt implements Initializable {
         contactField.setItems(DBContact.DBallcontacts());
         userIDcombo.setItems(DBConnection.getAllUsers());
         try {
-            customerIDCombo.setItems(Customer.getCustomers());
+            customerIDCombo.setItems(Client.getCustomers());
         } catch (SQLException e) {
             e.printStackTrace();
         }

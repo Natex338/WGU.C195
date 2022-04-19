@@ -11,8 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Model.Client;
 import sample.Model.Countries;
-import sample.Model.Customer;
 import sample.Utils.DBCountries;
 import sample.Utils.DBCustomer;
 
@@ -95,15 +95,15 @@ public class CreateCustomer implements Initializable {
         /**
          * Customer validity check
          */
-        if(Customer.validCustomer(name,address,phone,postal) ){
+        if(Client.validCustomer(name,address,phone,postal) ){
             if ((countryCombo.getSelectionModel().getSelectedIndex())!=-1){
                 country = countryCombo.getSelectionModel().getSelectedItem().getCountry_Id();
             }
             if (!regionCombo.getValue().isEmpty()) {
                 divisionID = Countries.getDivision(regionCombo.getValue());
             }
-            Customer newCustomer = new Customer(name,address,postal,phone,divisionID ,country);
-            DBCustomer.insertCustomer(newCustomer);
+            Client newClient = new Client(name,address,postal,phone,divisionID ,country);
+            DBCustomer.insertCustomer(newClient);
 
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("sample/View/viewCustomers.fxml")));
             Scene scene = new Scene(root);

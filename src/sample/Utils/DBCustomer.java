@@ -2,7 +2,8 @@ package sample.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Controller.LoginScreen;
-import sample.Model.Customer;
+import sample.Model.Client;
+
 import java.sql.*;
 
 /**
@@ -12,15 +13,15 @@ public abstract class DBCustomer {
 
 
     /**
-     * @param customer Customer being added to the Database
+     * @param client Customer being added to the Database
      */
-    public static void insertCustomer(Customer customer) {
-        String customerName =customer.getCustomerName();
-        String address = customer.getAddress();
-        String postal= customer.getCustomerPostal();
-        String phone = customer.getCustomerPhone();
+    public static void insertCustomer(Client client) {
+        String customerName = client.getCustomerName();
+        String address = client.getAddress();
+        String postal= client.getCustomerPostal();
+        String phone = client.getClientPhone();
         String createdBY= LoginScreen.loggedInUser.getUserName();
-        int ID = customer.getDivID();
+        int ID = client.getDivID();
 
         try {
             String insertCustomer = "Insert into customers (Customer_ID,Customer_Name, Address, Postal_Code, Phone, Created_By,Division_ID,Last_Updated_By) VALUES(null,?,?,?,?,?,?,?);";
@@ -40,16 +41,16 @@ public abstract class DBCustomer {
     }
 
     /**
-     * @param customer Customer being updated in the database
+     * @param client Customer being updated in the database
      */
-    public static void updateCustomer(Customer customer){
-        String customerName =customer.getCustomerName();
-        String address = customer.getAddress();
-        String postal= customer.getCustomerPostal();
-        String phone = customer.getCustomerPhone();
+    public static void updateCustomer(Client client){
+        String customerName = client.getCustomerName();
+        String address = client.getAddress();
+        String postal= client.getCustomerPostal();
+        String phone = client.getClientPhone();
         String createdBY= LoginScreen.loggedInUser.getUserName();
-        int ID = customer.getDivID();
-        int custID=customer.getCustomerID();
+        int ID = client.getDivID();
+        int custID= client.getCustomerID();
 
         try {
             String insertCustomer = "UPDATE customers SET Customer_Name =?, Address =?, Postal_Code=?, Phone =?, Created_By = ?, Division_ID = ?, Last_Updated_By = ? WHERE Customer_ID =? ;";
@@ -73,8 +74,8 @@ public abstract class DBCustomer {
      * @return returns all customer objects
      * @throws SQLException throws SQL error if it can't access the database.
      */
-    public static ObservableList<Customer> getAllCustomers() throws SQLException {
-        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    public static ObservableList<Client> getAllCustomers() throws SQLException {
+        ObservableList<Client> allClients = FXCollections.observableArrayList();
         try {
             Statement statement = DBQuery.getStatement();
 
@@ -92,26 +93,26 @@ public abstract class DBCustomer {
                 String region = result.getString("Division");
                 int countryid= result.getInt("COUNTRY_ID");
                 String countryName = result.getString("Country");
-                Customer c = new Customer(customerID, name, address, postalCode, region, phone, divID, countryid, countryName);
-                allCustomers.add(c);
+                Client c = new Client(customerID, name, address, postalCode, region, phone, divID, countryid, countryName);
+                allClients.add(c);
             }
-            Customer.setCustomers(allCustomers);
+            Client.setCustomers(allClients);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return allCustomers;
+        return allClients;
     }
 
     /**
-     * @param customer customer being deleted from the database
+     * @param client customer being deleted from the database
      * @throws SQLException throws SQL error if it can't access the database.
      */
-    public static void deleteCustomer(Customer customer) throws SQLException {
+    public static void deleteCustomer(Client client) throws SQLException {
 
         String deleteStatement = "DELETE FROM customers WHERE Customer_ID = ?;";
         PreparedStatement ps = DBConnection.startConnection().prepareStatement(deleteStatement);
-        ps.setInt(1,customer.getCustomerID());
+        ps.setInt(1, client.getCustomerID());
         ps.execute();
     }
 

@@ -10,35 +10,35 @@ import java.sql.SQLException;
 /**
  * Customer Class
  */
-public class Customer  {
+public class Client {
     private int customerID;
-    private String customerName;
+    private String clientName;
     private String address;
-    private String customerPhone;
+    private String clientPhone;
     private int divID;
     private String customerPostal;
     private String division;
     private int countryId;
     private String country;
-    private static ObservableList<Customer> customers = FXCollections.observableArrayList();
+    private static ObservableList<Client> clients = FXCollections.observableArrayList();
     private String addressRegion;
 
     /**
      * @param customerID  Customer ID
-     * @param customerName Customer Name
+     * @param clientName Customer Name
      * @param address Customer Address
      * @param customerPostalCode Customer Postal Code
      * @param region Customer Region
-     * @param customerPhone Customer Phone
+     * @param clientPhone Customer Phone
      * @param divID Customer Division ID
      * @param countryId Customer Country ID
      * @param countryName Customer Country Name
      */
-    public Customer(int customerID, String customerName, String address,String customerPostalCode, String region, String customerPhone, int divID, int countryId,String countryName){
+    public Client(int customerID, String clientName, String address, String customerPostalCode, String region, String clientPhone, int divID, int countryId, String countryName){
         this.customerID =customerID;
-        this.customerName = customerName;
+        this.clientName = clientName;
         this.address = address;
-        this.customerPhone = customerPhone;
+        this.clientPhone = clientPhone;
         this.divID=divID;
         this.customerPostal =customerPostalCode;
         this.countryId=countryId;
@@ -48,17 +48,18 @@ public class Customer  {
     }
 
     /**
-     * @param customerName  Customer Name
+     * @param clientName  Customer Name
      * @param address Customer Address
      * @param customerPostalCode Customer Postal Code
-     * @param customerPhone Customer Phone
+     *
+     * @param clientPhone Customer Phone
      * @param divID Customer Division ID
      * @param countryId Customer Country ID
      */
-    public Customer( String customerName, String address,String customerPostalCode, String customerPhone, int divID, int countryId){
-        this.customerName = customerName;
+    public Client(String clientName, String address, String customerPostalCode, String clientPhone, int divID, int countryId){
+        this.clientName = clientName;
         this.address = address;
-        this.customerPhone = customerPhone;
+        this.clientPhone = clientPhone;
         this.divID=divID;
         this.customerPostal =customerPostalCode;
         this.countryId=countryId;
@@ -68,7 +69,7 @@ public class Customer  {
     /**
      * Customer Getters
      */
-    public static ObservableList<Customer> getCustomers() throws SQLException {
+    public static ObservableList<Client> getCustomers() throws SQLException {
         return DBCustomer.getAllCustomers();
     }
     public String getAddress() {
@@ -87,10 +88,10 @@ public class Customer  {
         return addressRegion;
     }
     public String getCustomerName() {
-        return customerName;
+        return clientName;
     }
-    public String getCustomerPhone() {
-        return customerPhone;
+    public String getClientPhone() {
+        return clientPhone;
     }
     public String getCustomerPostal() {
         return customerPostal;
@@ -118,10 +119,10 @@ public class Customer  {
         this.customerID = customerID;
     }
     public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+        this.clientName = customerName;
     }
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+    public void setClientPhone(String clientPhone) {
+        this.clientPhone = clientPhone;
     }
     public void setDivID(int divID) {
         this.divID = divID;
@@ -144,8 +145,8 @@ public class Customer  {
     public void setAddressRegion(String addressRegion) {
         this.addressRegion = addressRegion;
     }
-    public static void setCustomers(ObservableList<Customer> customers) {
-        Customer.customers = customers;
+    public static void setCustomers(ObservableList<Client> clients) {
+        Client.clients = clients;
     }
 
 
@@ -167,6 +168,6 @@ public class Customer  {
      * @return Overriding the toString method to print Customer Name.
      */
     public String toString(){
-        return customerName;
+        return clientName;
     }
 }

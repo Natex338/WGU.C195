@@ -53,7 +53,7 @@ public class ModifyApt implements Initializable {
     @FXML
     private ComboBox <User> useridCombo;
     @FXML
-    private ComboBox <Customer> customerIDcombo;
+    private ComboBox <Client> customerIDcombo;
 
     /**
      * generates the time fields with local time data.
@@ -80,7 +80,7 @@ public class ModifyApt implements Initializable {
  */
         contactField.setItems(DBContact.DBallcontacts());
         try {
-            customerIDcombo.setItems(Customer.getCustomers());
+            customerIDcombo.setItems(Client.getCustomers());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,7 +117,7 @@ public class ModifyApt implements Initializable {
          * Checks the customers for the customer ID that match the one selected.
          */
         try {
-            for (Customer c : Customer.getCustomers()){
+            for (Client c : Client.getCustomers()){
                 if (holdApt.getCustomerID()==c.getCustomerID()){
                     customerIDcombo.setValue(c);
                     break;
