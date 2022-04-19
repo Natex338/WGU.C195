@@ -24,6 +24,9 @@ public abstract class DBConnection {
     private static Connection conn= null;
     //private static final String jdbcURL="jdbc:mysql://34.83.56.255:3306/Capstoner";
 
+    //JavaFX settings
+    //--module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics
+
 
 
     /**
