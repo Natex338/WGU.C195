@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.HomePage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.HomePage">
    <children>
       <Button fx:id="exitButton" layoutX="968.0" layoutY="20.0" mnemonicParsing="false" onAction="#onExitButton" prefHeight="25.0" prefWidth="51.0" text="Exit" />
       <Button fx:id="viewCustomersButton" layoutX="270.0" layoutY="55.0" mnemonicParsing="false" onAction="#onViewCustomers" prefHeight="25.0" prefWidth="104.0" text="View Clients" />
@@ -38,5 +38,6 @@
       </RadioButton>
       <RadioButton layoutX="774.0" layoutY="59.0" mnemonicParsing="false" onAction="#onByMonth" text="By Month" toggleGroup="$viewfilter" />
       <RadioButton layoutX="854.0" layoutY="59.0" mnemonicParsing="false" onAction="#onByWeek" text="By Week" toggleGroup="$viewfilter" />
+      <TextField fx:id="searchBox" layoutX="729.0" layoutY="25.0" onAction="#onSearchEnter" prefHeight="25.0" prefWidth="191.0" promptText="Search" />
    </children>
 </AnchorPane>

@@ -67,6 +67,9 @@ public class HomePage implements Initializable {
     @FXML
     private TableView<Appointment> userAptList;
     public static Appointment modApt;
+    @FXML
+    private TextField searchBox;
+
 
 
     /**
@@ -253,5 +256,33 @@ public class HomePage implements Initializable {
         }
 
     }
+
+    public void onSearchEnter(ActionEvent actionEvent) throws SQLException {
+        String a = searchBox.getText();
+        ObservableList<Appointment> apt=searchByContact(a);
+
+        if(!apt.isEmpty()) {
+            userAptList.setItems(apt);
+        }
+        else {
+            Alert noPart =new Alert(Alert.AlertType.WARNING);
+            noPart.setTitle("No Part Found!");
+            noPart.setHeaderText("No Part Found!");
+            noPart.setContentText("Please enter a valid part name or part ID");
+            Optional<ButtonType> result = noPart.showAndWait();
+        }
+    }
+
+    private ObservableList<Appointment>searchByContact(String contactName) throws SQLException {
+        ObservableList<Appointment> apt = FXCollections.observableArrayList();
+        ObservableList<Appointment> allAppointments = DBAppointments.getAllApt();
+        for(Appointment a:allAppointments){
+            if ((a.getContactName().toLowerCase().contains((contactName).toLowerCase()))){
+                apt.add(a);
+            }
+        }
+        return apt;
+    }
 }
+
 
