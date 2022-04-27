@@ -13,12 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
+import sample.Model.Client;
 import sample.Utils.DBAppointments;
+import sample.Utils.DBCustomer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -270,19 +273,29 @@ public class HomePage implements Initializable {
             noPart.setHeaderText("No Part Found!");
             noPart.setContentText("Please enter a valid part name or part ID");
             Optional<ButtonType> result = noPart.showAndWait();
+            userAptList.setItems(DBAppointments.getAllApt());
+
         }
     }
 
     private ObservableList<Appointment>searchByContact(String contactName) throws SQLException {
         ObservableList<Appointment> apt = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = DBAppointments.getAllApt();
+        ObservableList<Client> allClients = DBCustomer.getAllCustomers();
+        int customer_id = 0;
         for(Appointment a:allAppointments){
-            if ((a.getContactName().toLowerCase().contains((contactName).toLowerCase()))){
+            for (Client c : allClients){
+               if (c.getCustomerName().toLowerCase().contains((contactName).toLowerCase())){
+                   customer_id= c.getCustomerID();
+               }
+            }
+            if ((a.getContactName().toLowerCase().contains((contactName).toLowerCase())) || customer_id == a.getCustomerID()){
                 apt.add(a);
             }
         }
         return apt;
     }
+
 }
 
 
