@@ -12,7 +12,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
     <children>
         <Button fx:id="onHomePage" layoutX="931.0" layoutY="20.0" mnemonicParsing="false" onAction="#onHomePage" prefHeight="25.0" prefWidth="88.0" text="HomePage" />
-        <TableView fx:id="aptByContact" layoutX="24.0" layoutY="115.0" prefHeight="154.0" prefWidth="929.0">
+        <TableView fx:id="aptByContact" layoutX="24.0" layoutY="115.0" prefHeight="154.0" prefWidth="971.0">
             <columns>
                 <TableColumn fx:id="aptIDCol" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="aptTitleCol" prefWidth="75.0" text="Title" />
@@ -30,31 +30,28 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-      <ChoiceBox fx:id="contactCombo" layoutX="252.0" layoutY="81.0" onAction="#onCantactCombo" prefWidth="150.0" />
-      <Label layoutX="18.0" layoutY="78.0" prefHeight="27.0" prefWidth="234.0" text="Appointment list by Contact:">
+      <ChoiceBox fx:id="contactCombo" layoutX="269.0" layoutY="79.0" onAction="#onCantactCombo" prefWidth="150.0" />
+      <Label layoutX="18.0" layoutY="78.0" prefHeight="27.0" prefWidth="251.0" text="Appointment list by Employee:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="24.0" layoutY="530.0" text="Appointments by type and Month">
+      <Label layoutX="24.0" layoutY="530.0" text="Appointments by Client and Month">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="aptByMonthView" layoutX="48.0" layoutY="571.0" prefHeight="200.0" prefWidth="234.0">
+      <TableView fx:id="aptByMonthView" layoutX="25.0" layoutY="563.0" prefHeight="200.0" prefWidth="647.0">
         <columns>
-          <TableColumn fx:id="aptMonth" prefWidth="150.0" text="Month" />
-          <TableColumn fx:id="count" minWidth="0.0" prefWidth="71.0" text="Apt Count" />
+          <TableColumn fx:id="aptMonth" prefWidth="52.0" text="Month" />
+          <TableColumn fx:id="count" minWidth="0.0" prefWidth="94.0" text="Apt Count" />
+          <TableColumn fx:id="aptByTypeField" prefWidth="355.0" text="Client" />
+          <TableColumn fx:id="byTypeCount" minWidth="0.0" prefWidth="143.0" text="Count" />
 
         </columns>
       </TableView>
-      <TableView fx:id="AptByTypeView" layoutX="322.0" layoutY="571.0" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn fx:id="aptByTypeField" prefWidth="151.0" text="Type" />
-          <TableColumn fx:id="byTypeCount" minWidth="0.0" prefWidth="48.0" text="Count" />
-        </columns>
-      </TableView>
-      <TableView fx:id="byLocationView" layoutX="24.0" layoutY="319.0" prefHeight="200.0" prefWidth="843.0">
+      <TableView fx:id="AptByTypeView" layoutX="731.0" layoutY="557.0" prefHeight="200.0" prefWidth="221.0" />
+      <TableView fx:id="byLocationView" layoutX="24.0" layoutY="319.0" prefHeight="200.0" prefWidth="977.0">
         <columns>
             <TableColumn fx:id="aptIDCol1" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="aptTitleCol1" prefWidth="75.0" text="Title" />
@@ -66,11 +63,11 @@
             <TableColumn fx:id="aptCustIdCol1" prefWidth="87.0" text="Customer ID" />
         </columns>
       </TableView>
-      <Label layoutX="24.0" layoutY="285.0" prefHeight="27.0" prefWidth="234.0" text="Appointment list by Location:">
+      <Label layoutX="24.0" layoutY="285.0" prefHeight="27.0" prefWidth="234.0" text="Appointment list by Client:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="locationCombo" layoutX="272.0" layoutY="286.0" onAction="#onLocationCombo" prefWidth="150.0" />
+      <ComboBox fx:id="locationCombo" layoutX="269.0" layoutY="286.0" onAction="#onLocationCombo" prefWidth="150.0" />
     </children>
 </AnchorPane>
