@@ -259,8 +259,8 @@ public abstract class  DBAppointments {
                 Reports r = new Reports(count, month );
                 byType.add(r);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
         return byType;
     }

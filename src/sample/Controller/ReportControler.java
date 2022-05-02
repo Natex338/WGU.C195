@@ -36,13 +36,13 @@ public class ReportControler implements Initializable {
     @FXML
     private TableColumn<Reports, Month> aptMonth;
     @FXML
-    private TableColumn<Reports, Integer> count;
+    private TableColumn<Reports, Integer> aptcount;
     @FXML
     private TableView<Reports> aptByMonthView;
     @FXML
-    private TableColumn<Reports, String> aptByTypeField;
+    private TableColumn<Reports, String> aptByclientField;
     @FXML
-    private TableColumn <Reports, Integer>byTypeCount;
+    private TableColumn <Reports, Integer>byClientCount;
     public TableView<Reports> AptByTypeView;
     @FXML
     private TableView<Appointment> aptByContact;
@@ -118,10 +118,10 @@ public class ReportControler implements Initializable {
         /**
          * sets all the table views columns and with correct data.
          */
-            aptByTypeField.setCellValueFactory(new PropertyValueFactory<>("type"));
-            byTypeCount.setCellValueFactory(new PropertyValueFactory<>("typeCount"));
-            aptMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
-            count.setCellValueFactory(new PropertyValueFactory<>("monthCount"));
+            aptByclientField.setCellValueFactory(new PropertyValueFactory<>("client"));
+            byClientCount.setCellValueFactory(new PropertyValueFactory<>("clientCount"));
+            aptMonth.setCellValueFactory(new PropertyValueFactory<>("aptmonth"));
+            aptcount.setCellValueFactory(new PropertyValueFactory<>("aptmonthCount"));
             aptIDCol.setCellValueFactory(new PropertyValueFactory<>("aptID"));
             aptTitleCol.setCellValueFactory(new PropertyValueFactory<>("aptTitle"));
             aptDescCol.setCellValueFactory(new PropertyValueFactory<>("aptDesc"));

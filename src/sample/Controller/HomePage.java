@@ -269,9 +269,9 @@ public class HomePage implements Initializable {
         }
         else {
             Alert noPart =new Alert(Alert.AlertType.WARNING);
-            noPart.setTitle("No Part Found!");
-            noPart.setHeaderText("No Part Found!");
-            noPart.setContentText("Please enter a valid part name or part ID");
+            noPart.setTitle("No appointment found!");
+            noPart.setHeaderText("No Appointment Found!");
+            noPart.setContentText("Please enter a valid Employee name or Client Name");
             Optional<ButtonType> result = noPart.showAndWait();
             userAptList.setItems(DBAppointments.getAllApt());
 
