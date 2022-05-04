@@ -10,7 +10,6 @@ public class Reports {
     private String type;
     private int typeCount;
     private String location;
-
     private String clientName;
 
 
@@ -27,12 +26,10 @@ public class Reports {
         this.type=t;
     }
 
-    public Reports(int mc, String m, int tCount, String t, String n) {
-        this.monthCount=mc;
-        this.month=m;
-        this.typeCount=tCount;
-        this.type=t;
-        this.clientName=n;
+    public Reports(int m, int mCount, String cName) {
+        this.monthCount=mCount;
+        this.typeCount=m;
+        this.clientName=cName;
     }
 
     /**
@@ -43,6 +40,8 @@ public class Reports {
         this.typeCount=typeCount;
         this.type= type;
     }
+
+
 
 
 

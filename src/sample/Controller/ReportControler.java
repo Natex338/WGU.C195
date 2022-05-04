@@ -14,10 +14,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
+import sample.Model.Client;
 import sample.Model.Contact;
 import sample.Model.Reports;
 import sample.Utils.DBAppointments;
 import sample.Utils.DBContact;
+import sample.Utils.DBCustomer;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -96,8 +99,8 @@ public class ReportControler implements Initializable {
 
         ObservableList<String> listocationList= FXCollections.observableArrayList();
         try {
-            for (Appointment a : DBAppointments.getAllApt()) {
-                listocationList.add(a.getAptLocation());
+            for (Client a : DBCustomer.getAllCustomers()) {
+                listocationList.add(a.getCustomerName());
             }
             locationCombo.setItems(listocationList);
         }
@@ -111,17 +114,16 @@ public class ReportControler implements Initializable {
  */
 
             contactCombo.setItems(DBContact.DBallcontacts());
-            AptByTypeView.setItems(DBAppointments.getReportDataType());
+           // AptByTypeView.setItems(DBAppointments.getReportDataType());
             aptByMonthView.setItems(DBAppointments.getReportDataMonth());
 
 
         /**
          * sets all the table views columns and with correct data.
          */
-            aptByclientField.setCellValueFactory(new PropertyValueFactory<>("client"));
-            byClientCount.setCellValueFactory(new PropertyValueFactory<>("clientCount"));
-            aptMonth.setCellValueFactory(new PropertyValueFactory<>("aptmonth"));
-            aptcount.setCellValueFactory(new PropertyValueFactory<>("aptmonthCount"));
+            aptByclientField.setCellValueFactory(new PropertyValueFactory<>("clientName"));
+            aptMonth.setCellValueFactory(new PropertyValueFactory<>("monthCount"));
+            aptcount.setCellValueFactory(new PropertyValueFactory<>("typeCount"));
             aptIDCol.setCellValueFactory(new PropertyValueFactory<>("aptID"));
             aptTitleCol.setCellValueFactory(new PropertyValueFactory<>("aptTitle"));
             aptDescCol.setCellValueFactory(new PropertyValueFactory<>("aptDesc"));
@@ -172,12 +174,16 @@ public class ReportControler implements Initializable {
      * @throws SQLException if it has issues accessing or writing to the database it throws error.
      */
     public void onLocationCombo(ActionEvent actionEvent) throws SQLException {
-        for (String s : locationCombo.getItems()){
-            if (locationCombo.getSelectionModel().getSelectedItem().equals(s)){
-                byLocationView.setItems(DBAppointments.getAllAptbyLocation(s));
-                break;
+        ObservableList<Appointment> listCustomers= FXCollections.observableArrayList();
+        for (Appointment a : DBAppointments.getAllApt()){
+                for (Client c : DBCustomer.getAllCustomers()) {
+                   if(c.getCustomerName().equals(locationCombo.getSelectionModel().toString())){
+                       if (a.getCustomerID()==c.getCustomerID()){
+                           listCustomers.add(a);
+                       }
+                   }
+                }
             }
+        byLocationView.setItems(listCustomers);
         }
-
-    }
 }

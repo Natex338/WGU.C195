@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ReportControler">
     <children>
         <Button fx:id="onHomePage" layoutX="931.0" layoutY="20.0" mnemonicParsing="false" onAction="#onHomePage" prefHeight="25.0" prefWidth="88.0" text="HomePage" />
         <TableView fx:id="aptByContact" layoutX="24.0" layoutY="115.0" prefHeight="154.0" prefWidth="971.0">
@@ -41,7 +41,6 @@
           <TableColumn fx:id="aptMonth" prefWidth="52.0" text="Month" />
           <TableColumn fx:id="aptcount" minWidth="0.0" prefWidth="94.0" text="Apt Count" />
           <TableColumn fx:id="aptByclientField" prefWidth="355.0" text="Client" />
-          <TableColumn fx:id="byClientCount" minWidth="0.0" prefWidth="143.0" text="Count" />
 
         </columns>
       </TableView>

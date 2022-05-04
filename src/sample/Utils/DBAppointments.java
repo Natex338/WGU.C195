@@ -250,13 +250,14 @@ public abstract class  DBAppointments {
         ObservableList<Reports>byType= FXCollections.observableArrayList();
 
         try {
-            String getReportInfo = "SELECT MONTH(start) as Month, count(*) as Count FROM appointments group by Month;";
+            String getReportInfo = "SELECT Customer_Name, MONTH(start) as Month, count(*) as Count FROM appointments, customers group by Month, Customer_Name ORDER BY Month;";
             PreparedStatement ps = DBConnection.startConnection().prepareStatement(getReportInfo);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 int month= resultSet.getInt ("Month");
                 int count=resultSet.getInt( "Count");
-                Reports r = new Reports(count, month );
+                String custName= resultSet.getString("Customer_Name");
+                Reports r = new Reports(count, month, custName);
                 byType.add(r);
             }
         } catch (SQLException throwable) {
