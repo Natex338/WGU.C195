@@ -36,7 +36,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="aptByMonthView" layoutX="25.0" layoutY="563.0" prefHeight="200.0" prefWidth="647.0">
+      <TableView fx:id="aptByMonthView" layoutX="25.0" layoutY="563.0" prefHeight="200.0" prefWidth="977.0">
         <columns>
           <TableColumn fx:id="aptMonth" prefWidth="52.0" text="Month" />
           <TableColumn fx:id="aptcount" minWidth="0.0" prefWidth="94.0" text="Apt Count" />
@@ -45,7 +45,6 @@
 
         </columns>
       </TableView>
-      <TableView fx:id="AptByTypeView" layoutX="731.0" layoutY="557.0" prefHeight="200.0" prefWidth="221.0" />
       <TableView fx:id="byLocationView" layoutX="24.0" layoutY="319.0" prefHeight="200.0" prefWidth="977.0">
         <columns>
             <TableColumn fx:id="aptIDCol1" prefWidth="75.0" text="ID" />

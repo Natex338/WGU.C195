@@ -11,6 +11,8 @@ public class Reports {
     private int typeCount;
     private String location;
 
+    private String clientName;
+
 
     /**
      * @param mc How many Appointments in a month
@@ -25,6 +27,14 @@ public class Reports {
         this.type=t;
     }
 
+    public Reports(int mc, String m, int tCount, String t, String n) {
+        this.monthCount=mc;
+        this.month=m;
+        this.typeCount=tCount;
+        this.type=t;
+        this.clientName=n;
+    }
+
     /**
      * @param typeCount Type count of appointment
      * @param type type of appointment
@@ -33,6 +43,8 @@ public class Reports {
         this.typeCount=typeCount;
         this.type= type;
     }
+
+
 
     /**
      * @param location Location name
@@ -118,5 +130,13 @@ public class Reports {
      */
     public void setMonth(String month) {
         this.month = month;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 }
