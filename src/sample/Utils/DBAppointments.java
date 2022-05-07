@@ -24,7 +24,7 @@ public abstract class  DBAppointments {
         ObservableList<Appointment> DBallAppointments = FXCollections.observableArrayList();
         try {
             Statement statement = DBQuery.getStatement();
-            String getAllCustQuery = "SELECT * FROM appointments, contacts WHERE appointments.Contact_ID = contacts.Contact_ID;";
+            String getAllCustQuery = "SELECT * FROM appointments, contacts, customers WHERE appointments.Contact_ID = contacts.Contact_ID AND appointments.Customer_ID = customers.Customer_ID;";
             ResultSet result = statement.executeQuery(getAllCustQuery);
             while (result.next()) {
                 int aptId = result.getInt("Appointment_ID");
@@ -38,9 +38,10 @@ public abstract class  DBAppointments {
                 int customerID = result.getInt("Customer_ID");
                 int userID = result.getInt("User_ID");
                 String contactName = result.getString("Contact_Name");
+                String customerName = result.getString("Customer_Name");
 
 
-                Appointment a = new Appointment(aptId, aptTitle, aptDesc, aptLocation, aptType, startDate, endDate, contactID, customerID, userID, contactName);
+                Appointment a = new Appointment(aptId, aptTitle, aptDesc, aptLocation, aptType, startDate, endDate, contactID, customerID, userID, contactName, customerName);
                 DBallAppointments.add(a);
             }
         } catch (Exception e) {

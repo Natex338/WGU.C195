@@ -19,6 +19,8 @@ public class Appointment {
     private int customerID;
     private int userID;
 
+    private  String customerName;
+
 
     /**
      * @param id Appointment ID
@@ -46,6 +48,20 @@ public class Appointment {
        this.userID=userID;
        this.contactName=contactName;
    }
+    public Appointment(int id, String title, String desc, String location, String type, LocalDateTime sDate, LocalDateTime eDate, int contactID, int customerID, int userID,String contactName, String customerName){
+        this.aptID =id;
+        this.aptTitle =title;
+        this.aptDesc =desc;
+        this.aptLocation =location;
+        this.aptType =type;
+        this.startDate=sDate;
+        this.endDate=eDate;
+        this.contactID=contactID;
+        this.customerID=customerID;
+        this.userID=userID;
+        this.contactName=contactName;
+        this.customerName=customerName;
+    }
 
 
     /**
@@ -71,6 +87,20 @@ public class Appointment {
         this.customerID=customerID;
         this.userID=userID;
         this.contactName = contactName;
+    }
+
+    public Appointment(String title, String desc, String location, String type, LocalDateTime sDate, LocalDateTime eDate, int contactID, int customerID, int userID,String contactName, String customerName){
+        this.aptTitle =title;
+        this.aptDesc =desc;
+        this.aptLocation =location;
+        this.aptType =type;
+        this.startDate=sDate;
+        this.endDate=eDate;
+        this.contactID=contactID;
+        this.customerID=customerID;
+        this.userID=userID;
+        this.contactName = contactName;
+        this.customerName = customerName;
     }
 
     /**
@@ -274,5 +304,11 @@ public class Appointment {
     }
 
 
+    public String getCustomerName() {
+        return customerName;
+    }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }

@@ -89,7 +89,7 @@ public class HomePage implements Initializable {
         aptTypeCol.setCellValueFactory(new PropertyValueFactory<>("aptType"));
         aptSDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         aptEDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        aptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        aptCustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         userIDField.setCellValueFactory(new PropertyValueFactory<>("userID"));
         try {
             userAptList.setItems(DBAppointments.getAllApt());
