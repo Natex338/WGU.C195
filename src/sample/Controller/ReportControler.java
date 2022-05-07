@@ -177,7 +177,7 @@ public class ReportControler implements Initializable {
         ObservableList<Appointment> listCustomers= FXCollections.observableArrayList();
         for (Appointment a : DBAppointments.getAllApt()){
                 for (Client c : DBCustomer.getAllCustomers()) {
-                   if(c.getCustomerName().equals(locationCombo.getSelectionModel().toString())){
+                   if(c.getCustomerName().equals(locationCombo.getSelectionModel().getSelectedItem())){
                        if (a.getCustomerID()==c.getCustomerID()){
                            listCustomers.add(a);
                        }
