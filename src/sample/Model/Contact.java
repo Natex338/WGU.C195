@@ -4,7 +4,7 @@ package sample.Model;
 /**
  * Contact Class
  */
-public class Contact {
+public class Contact extends People {
     /**
      * Contact class variables.
      */
@@ -17,10 +17,13 @@ public class Contact {
      * @param contactName Contact Name
      * @param email Contact Email
      */
+
     public Contact(int contactID, String contactName, String email){
-        this.contactID=contactID;
-        this.contactName=contactName;
+        super(contactID, contactName);
         this.email=email;
+    }
+    public Contact(int ID, String pName) {
+        super(ID, pName);
     }
 
     /**
