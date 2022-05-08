@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * Customer Class
  */
-public class Client extends People {
+public class Client {
     private int customerID;
     private String clientName;
     private String address;
@@ -20,6 +20,7 @@ public class Client extends People {
     private String division;
     private int countryId;
     private String country;
+    private static ObservableList<Client> clients = FXCollections.observableArrayList();
     private String addressRegion;
 
     /**
@@ -34,7 +35,8 @@ public class Client extends People {
      * @param countryName Customer Country Name
      */
     public Client(int customerID, String clientName, String address, String customerPostalCode, String region, String clientPhone, int divID, int countryId, String countryName){
-        super(customerID,clientName);
+        this.customerID =customerID;
+        this.clientName = clientName;
         this.address = address;
         this.clientPhone = clientPhone;
         this.divID=divID;
@@ -43,10 +45,6 @@ public class Client extends People {
         this.country =countryName;
         this.division=region;
         this.addressRegion = address +", "+ region;
-    }
-
-    public Client(int ID, String pName) {
-        super(ID, pName);
     }
 
     /**
@@ -59,7 +57,6 @@ public class Client extends People {
      * @param countryId Customer Country ID
      */
     public Client(String clientName, String address, String customerPostalCode, String clientPhone, int divID, int countryId){
-
         this.clientName = clientName;
         this.address = address;
         this.clientPhone = clientPhone;
@@ -68,8 +65,6 @@ public class Client extends People {
         this.countryId=countryId;
 
     }
-
-
 
     /**
      * Customer Getters
@@ -151,6 +146,7 @@ public class Client extends People {
         this.addressRegion = addressRegion;
     }
     public static void setCustomers(ObservableList<Client> clients) {
+        Client.clients = clients;
     }
 
 
@@ -167,8 +163,6 @@ public class Client extends People {
         }
         else return true;
     }
-
-
 
     /**
      * @return Overriding the toString method to print Customer Name.

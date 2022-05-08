@@ -74,24 +74,6 @@ public abstract class DBCustomer {
      * @return returns all customer objects
      * @throws SQLException throws SQL error if it can't access the database.
      */
-
-    public  static int MaxNum(){
-        int maxID=-1;
-       try {
-           Statement statement = DBQuery.getStatement();
-
-           String getAllCustQuery = "SELECT MAX(Customer_ID) as MAX_ID FROM customers;";
-           ResultSet result = statement.executeQuery(getAllCustQuery);
-           while (result.next()){
-               maxID=result.getInt("MAX_ID");
-           }
-       }
-       catch (Exception e){
-           System.out.println(e.getMessage());
-       }
-        return maxID++;
-    }
-
     public static ObservableList<Client> getAllCustomers() throws SQLException {
         ObservableList<Client> allClients = FXCollections.observableArrayList();
         try {
