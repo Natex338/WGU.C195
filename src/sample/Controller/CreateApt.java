@@ -97,11 +97,9 @@ public class CreateApt implements Initializable {
      * @throws IOException hanles writing the data errors.
      */
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
-
         /**
          * checks to see if fields are empty
          */
-
         String error = "";
         if (contactField.getValue()==null| customerIDCombo.getValue()==null|userIDcombo.getValue()==null|startTimeField.getValue()==null|endTimeField.getValue()==null) {
             Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -125,9 +123,6 @@ public class CreateApt implements Initializable {
             String contactName = contactField.getSelectionModel().getSelectedItem().getContactName();
             error=(Appointment.isValidApt(aptTitle,aptDesc,aptLocation,aptType,startDate,endDate));
             boolean overlapCheck = DBAppointments.appointmentOverlap(startDate,endDate, -1,customerID);
-
-
-
 
             /**
              * if validity check is good with no errors it creates a new appointment and saves it to the database. if not prompts with an error.
