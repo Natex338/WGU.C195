@@ -21,7 +21,7 @@ public abstract class DBConnection {
     private static final String jdbcURL= protocol + vendorName + ipAddress+ dbname;
     private static final String MYSQLJBCDriver= "com.mysql.cj.jdbc.Driver";
     private static final String userName= "root";
-    private static final String userPw= "root";
+    private static final String userPw= "password";
     private static Connection conn= null;
     //private static final String jdbcURL="jdbc:mysql://34.83.56.255:3306/Capstoner";   String url="jdbc:mysql://nedwa52-capstone-db.mysql.database.azure.com:3306/{your_database}?useSSL=true";myDbConn=DriverManager.getConnection(url, "Natex338", "{your_password}");
 
